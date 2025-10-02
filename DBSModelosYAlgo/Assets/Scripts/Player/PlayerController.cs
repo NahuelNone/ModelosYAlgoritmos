@@ -9,18 +9,21 @@ public class PlayerController : MonoBehaviour
 
     public int damage = 10;
     public int heal = 5;
+    
 
-    //private Rigidbody rb;
-    //private CapsuleCollider col;
+    private Rigidbody rb;
+    private CapsuleCollider col;
 
-    //private void Awake()
-    //{
-    //    rb = GetComponent<Rigidbody>();
-    //    col = GetComponent<CapsuleCollider>();
-    //
-    //    rb.isKinematic = true;
-    //    col.isTrigger = false;
-    //}
+    private void Awake()
+    {
+
+        rb = GetComponent<Rigidbody>();
+        col = GetComponent<CapsuleCollider>();
+    
+        //rb.isKinematic = true;
+        //col.isTrigger = false;
+
+    }
 
     void Start()
     {
@@ -31,15 +34,21 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-        Debug.Log("Pasan Cosas");
+        //Debug.Log("Pasan Cosas");
 
         if (model == null) return;
         
-        
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
-        model.Move(new Vector3 (h, 0f, v));
-        Debug.Log("1");
+        model.Move(new Vector3(h, 0f, v));
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+            float j = Input.GetAxisRaw("Jump");
+            model.Jump(new Vector3(0f, j, 0f));
+
+        }
 
         //poner aca on collision enter y todo es
         if (Input.GetKeyDown(KeyCode.J))

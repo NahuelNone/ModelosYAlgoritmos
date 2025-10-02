@@ -14,7 +14,7 @@ public class PlayerView : MonoBehaviour
     private void OnEnable()
     {
 
-        if (playerModel != null)
+        if (playerModel == null)
         {
 
             Debug.Log("Weas andan mal");
@@ -26,10 +26,6 @@ public class PlayerView : MonoBehaviour
         playerModel.OnHealthChanged += HandleHealthChanged;
         playerModel.OnCoinsChanged += HandleCoinsChanged;
         playerModel.OnDeath += HandleDeath;
-
-        // Forzar estado inicial
-        HandleHealthChanged(playerModel.currentHealth, playerModel.maxHealth);  
-        HandleCoinsChanged(playerModel.coins);
 
     }
 
@@ -50,17 +46,13 @@ public class PlayerView : MonoBehaviour
         
             healthText.text = $"Vida:{current}/{max}";
 
-        if (bodyRenderer != null )
+        if (bodyRenderer != null)
         {
+        
             float t = max > 0 ? (float) current/max : 0f ;
             Color c = Color.Lerp(Color.red, Color.green, t);
             bodyRenderer.material.color = c;
-        }
-        else
-        {
-
-            Debug.Log("Weas malas pasan 2");
-
+        
         }
         
     }

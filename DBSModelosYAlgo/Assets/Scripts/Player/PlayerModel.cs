@@ -7,18 +7,19 @@ public class PlayerModel : MonoBehaviour
 {
     //Maneja funciones, estados etc
 
-    public delegate void Healthchangedhandler(int current, int max);
-    public delegate void Coinschangedhandler(int coins);
+    public delegate void HealthChangedHandler(int current, int max);
+    public delegate void CoinsChangedHandler(int coins);
     public delegate void DeathHandler();
 
-    public event Healthchangedhandler OnHealthChanged;
-    public event Coinschangedhandler OnCoinsChanged;
+    public event HealthChangedHandler OnHealthChanged;
+    public event CoinsChangedHandler OnCoinsChanged;
     public event DeathHandler OnDeath;
 
     [SerializeField] public int maxHealth = 100;
     [SerializeField] public int currentHealth;
     [SerializeField] public int coins;
     [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private int jumpForce = 100;
 
     private void Awake()
     {
@@ -38,6 +39,15 @@ public class PlayerModel : MonoBehaviour
         if (inputDir.sqrMagnitude > 1f) inputDir.Normalize();
 
         transform.position += inputDir * moveSpeed * Time.deltaTime;
+
+    }
+
+    public void Jump(Vector3 inputDir)
+    {
+
+        if (inputDir.sqrMagnitude > 1f) inputDir.Normalize();
+
+        transform.position += inputDir * jumpForce * Time.deltaTime;
 
     }
 
@@ -79,7 +89,7 @@ public class PlayerModel : MonoBehaviour
         coins += amount;
         OnCoinsChanged?.Invoke(coins);
 
-        Debug.Log(coins);
+        Debug.Log("moneditas: " + coins);
 
     }
 
