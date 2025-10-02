@@ -1,6 +1,6 @@
 
 using UnityEngine;
-[RequireComponent (typeof(Collider))]
+//[RequireComponent (typeof(Collider))]
 public class Coin : MonoBehaviour
 {
     [SerializeField] private int amount = 1;
