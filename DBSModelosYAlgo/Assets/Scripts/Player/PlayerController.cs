@@ -10,17 +10,17 @@ public class PlayerController : MonoBehaviour
     public int damage = 10;
     public int heal = 5;
 
-    private Rigidbody rb;
-    private CapsuleCollider col;
+    //private Rigidbody rb;
+    //private CapsuleCollider col;
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-        col = GetComponent<CapsuleCollider>();
-
-        rb.isKinematic = true;
-        col.isTrigger = false;
-    }
+    //private void Awake()
+    //{
+    //    rb = GetComponent<Rigidbody>();
+    //    col = GetComponent<CapsuleCollider>();
+    //
+    //    rb.isKinematic = true;
+    //    col.isTrigger = false;
+    //}
 
     void Start()
     {
@@ -30,21 +30,42 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (model == null) return; 
-        
-            float h = Input.GetAxisRaw("Horizontal");
-            float v = Input.GetAxisRaw("Vertical");
-            model.Move(new Vector3 (h, 0f, v));
 
-        if (Input.GetKeyDown(KeyCode.J)) //poner aca on collision enter y todo eso
+        Debug.Log("Pasan Cosas");
+
+        if (model == null) return;
+        
+        
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+        model.Move(new Vector3 (h, 0f, v));
+        Debug.Log("1");
+
+        //poner aca on collision enter y todo es
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+
             model.TakeDamage(damage);
+            Debug.Log("2");
+
+        }
 
         if (Input.GetKeyDown(KeyCode.K))
+        {
+
             model.heal(heal);
+            Debug.Log("3");
+
+        }
 
         if (Input.GetKeyDown(KeyCode.R))
+        {
+
             model.ResetStats();
-        
+            Debug.Log("4");
+
+        }
+
 
     }
 }

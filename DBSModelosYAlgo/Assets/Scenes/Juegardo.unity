@@ -160,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerModel: {fileID: 172414725}
-  healtText: {fileID: 1240407499}
+  healthText: {fileID: 1240407499}
   coinsText: {fileID: 2011495465}
   bodyRenderer: {fileID: 172414730}
 --- !u!114 &172414725
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  currentHealt: 0
+  currentHealth: 0
   coins: 0
   moveSpeed: 5
 --- !u!114 &172414726
@@ -240,7 +240,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

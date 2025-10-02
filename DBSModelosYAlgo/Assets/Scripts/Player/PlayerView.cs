@@ -5,7 +5,7 @@ using TMPro;
 public class PlayerView : MonoBehaviour
 {
     [SerializeField] private PlayerModel playerModel;
-    public TMP_Text healtText;
+    public TMP_Text healthText;     
     public TMP_Text coinsText;
 
     public Renderer bodyRenderer;
@@ -13,26 +13,42 @@ public class PlayerView : MonoBehaviour
 
     private void OnEnable()
     {
-        if (playerModel != null) return;
 
-        //playerModel.OnHealthchanged += ...
-        //playerModel.OnCoinschanged += ...
-        //playerModel.OnDeath += ...
+        if (playerModel != null)
+        {
+
+            Debug.Log("Weas andan mal");
+            return;
+
+        }
+
+        // (suscripciones)
+        playerModel.OnHealthChanged += HandleHealthChanged;
+        playerModel.OnCoinsChanged += HandleCoinsChanged;
+        playerModel.OnDeath += HandleDeath;
+
+        // Forzar estado inicial
+        HandleHealthChanged(playerModel.currentHealth, playerModel.maxHealth);  
+        HandleCoinsChanged(playerModel.coins);
 
     }
+
 
     private void OnDisable()
     {
-        //playerModel.OnHealthchanged -= ...
-        //playerModel.OnCoinschanged -= ...
-        //playerModel.OnDeath -= ...
+
+        playerModel.OnHealthChanged -= HandleHealthChanged;
+        playerModel.OnCoinsChanged -= HandleCoinsChanged;
+        playerModel.OnDeath -= HandleDeath;
 
     }
-  private void HandHealthChanged(int current , int max)
+
+    private void HandleHealthChanged(int current , int max)
     {
-        if (healtText != null)
+
+        if (healthText != null)
         
-            healtText.text = $"Vida:{current}/{max}";
+            healthText.text = $"Vida:{current}/{max}";
 
         if (bodyRenderer != null )
         {
@@ -40,14 +56,22 @@ public class PlayerView : MonoBehaviour
             Color c = Color.Lerp(Color.red, Color.green, t);
             bodyRenderer.material.color = c;
         }
+        else
+        {
+
+            Debug.Log("Weas malas pasan 2");
+
+        }
         
     }
 
     private void HandleCoinsChanged (int coins)
     {
-        if ( coinsText != null)
+        if (coinsText != null)
         {
+
             coinsText.text = $"Monedas: {coins} ";
+
         }
     }
 

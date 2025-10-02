@@ -11,67 +11,86 @@ public class PlayerModel : MonoBehaviour
     public delegate void Coinschangedhandler(int coins);
     public delegate void DeathHandler();
 
-    public event Healthchangedhandler OnHealthchanged;
-    public event Coinschangedhandler OnCoinschanged;
+    public event Healthchangedhandler OnHealthChanged;
+    public event Coinschangedhandler OnCoinsChanged;
     public event DeathHandler OnDeath;
 
-    [SerializeField] private int maxHealth = 100;
-    [SerializeField] private int currentHealt;
-    [SerializeField] private int coins;
+    [SerializeField] public int maxHealth = 100;
+    [SerializeField] public int currentHealth;
+    [SerializeField] public int coins;
     [SerializeField] private float moveSpeed = 5f;
 
     private void Awake()
     {
-        currentHealt = maxHealth;
+        currentHealth = maxHealth;
     }
     void Start()
     {
-        OnHealthchanged?.Invoke(currentHealt, maxHealth);
-        OnCoinschanged?.Invoke(coins);
+
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+        OnCoinsChanged?.Invoke(coins);
+
     }
 
     public void Move (Vector3 inputDir)
     {
+
         if (inputDir.sqrMagnitude > 1f) inputDir.Normalize();
 
-        transform.position = inputDir * moveSpeed * Time.deltaTime;  
+        transform.position += inputDir * moveSpeed * Time.deltaTime;
+
     }
 
     public void TakeDamage (int amount)
     {
-        if (amount <= 0 || currentHealt == 0) return;
 
-        currentHealt = Mathf.Max(0, currentHealt - amount);
-        OnHealthchanged?.Invoke(currentHealt, maxHealth);
+        if (amount <= 0 || currentHealth == 0) return;
 
-        if (currentHealt == 0)
+        currentHealth = Mathf.Max(0, currentHealth - amount);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        Debug.Log(currentHealth);
+
+        if (currentHealth == 0)
         {
+
             OnDeath?.Invoke();
+
         }
         
     }
 
     public void heal(int amount)
     {
-        if (amount <= 0 || currentHealt == maxHealth) return;
 
-        currentHealt = Mathf.Min(maxHealth, currentHealt + amount);
-        OnHealthchanged?.Invoke(currentHealt, maxHealth);
+        if (amount <= 0 || currentHealth == maxHealth) return;
+
+        currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        OnHealthChanged?.Invoke(currentHealth, maxHealth);
+
+        Debug.Log(currentHealth);
+
     }
 
     public void AddCoin (int amount)
     {
+
         if (amount <= 0) return;
         coins += amount;
-        OnCoinschanged?.Invoke(coins);
+        OnCoinsChanged?.Invoke(coins);
+
+        Debug.Log(coins);
+
     }
 
     public void ResetStats()
     {
-        currentHealt = maxHealth;
+
+        currentHealth = maxHealth;
         coins = 0;
-        OnHealthchanged?.Invoke(currentHealt , maxHealth);
-        OnCoinschanged?.Invoke(coins);
+        OnHealthChanged?.Invoke(currentHealth , maxHealth);
+        OnCoinsChanged?.Invoke(coins);
+
     }
 
 }
