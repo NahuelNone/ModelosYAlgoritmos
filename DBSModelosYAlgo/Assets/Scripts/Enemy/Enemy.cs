@@ -8,14 +8,28 @@ namespace Builder
     {
         public float MaxLife
         {
-            get => _maxLife; //devuelve la maxlife
 
+            get => _maxLife;
 
             set
             {
-                _maxLife = Mathf.Clamp(value, 0, 100); //clampeamos entre 0 y 100
 
-                _currentLife = _maxLife; //hacemos que vida actual sea igual a la maxima
+                _maxLife = 100f;
+
+            }
+
+        }
+
+        public float currentLife
+        {
+
+            get => currentLife;
+
+            set
+            {
+
+                currentLife = 100f;
+
             }
 
         }
@@ -27,14 +41,26 @@ namespace Builder
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+
                GetHit();
+
             }
         }
+
         private void GetHit()
         {
+
             _currentLife -= 25;
 
             if (_currentLife < 0) return;
+
         }
+
+        public void TakeDamage(int amount)
+        {
+            _currentLife -= amount;
+            if (_currentLife <= 0) Destroy(gameObject);
+        }
+
     }
 }

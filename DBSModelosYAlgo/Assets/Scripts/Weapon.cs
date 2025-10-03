@@ -1,18 +1,25 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] private Factory _factory;
+    // Weapon.cs (ejemplo)
+    [SerializeField] private Factory factory;      // puede ser BulletFactory
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private float muzzleVelocity = 40f;
 
-    private void Update()
+    void Fire()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
+        var data = new SpawnData(
+            firePoint.position,
+            firePoint.rotation,
+            firePoint.forward,
+            muzzleVelocity,
+            transform.root
+        );
 
-            _factory.GetIproduct(Vector3.zero);
-        }
+        factory.GetProduct(data);   // ← antes: GetIproduct(...)
     }
 
 }

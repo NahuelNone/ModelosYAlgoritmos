@@ -1,19 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletFactory : Factory
 {
-    [SerializeField] public Bullet _bulletPrefab;
+    [SerializeField] private Bullet bulletPrefab;
 
-    public override Iproduct GetIproduct(Vector3 position)
+    public override IProduct GetProduct(SpawnData data)
     {
-        Iproduct obj = Instantiate(_bulletPrefab , position, Quaternion.identity);
-
-
-        obj.Initialize();
-
-        return obj;
-        
+        Bullet b = Instantiate(bulletPrefab, data.position, data.rotation);
+        b.Initialize(data);
+        return b;
     }
 }
