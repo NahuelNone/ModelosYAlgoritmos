@@ -42,13 +42,17 @@ public class PlayerController : MonoBehaviour
         float v = Input.GetAxisRaw("Vertical");
         model.Move(new Vector3(h, 0f, v));
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
 
             float j = Input.GetAxisRaw("Jump");
             model.Jump(new Vector3(0f, j, 0f));
 
         }
+       /* if (Input.GetKeyDown(KeyCode.Space)) // click izquierdo dispara
+        {
+            model.Shoot();
+        }*/
 
         //poner aca on collision enter y todo es
         if (Input.GetKeyDown(KeyCode.J))

@@ -21,6 +21,10 @@ public class PlayerModel : MonoBehaviour
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private int jumpForce = 100;
 
+    public delegate void ShootHandler(GameObject bullet);
+    public event ShootHandler OnShoot;
+
+
     private void Awake()
     {
         currentHealth = maxHealth;
@@ -102,5 +106,9 @@ public class PlayerModel : MonoBehaviour
         OnCoinsChanged?.Invoke(coins);
 
     }
-
+    public void Shoot()
+    {
+        // Notificamos al View que el jugador disparó
+        OnShoot?.Invoke(gameObject);
+    }
 }

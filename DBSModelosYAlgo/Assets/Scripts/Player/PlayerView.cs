@@ -1,13 +1,15 @@
 
 using UnityEngine;
 using TMPro;
+using static PlayerModel;
 
 public class PlayerView : MonoBehaviour
 {
     [SerializeField] private PlayerModel playerModel;
     public TMP_Text healthText;     
     public TMP_Text coinsText;
-
+    [SerializeField] private GameObject bulletPrefab; // Prefab de la bala
+    [SerializeField] private Transform shootPoint;    // Punto en frente del player
     public Renderer bodyRenderer;
 
 
@@ -26,6 +28,7 @@ public class PlayerView : MonoBehaviour
         playerModel.OnHealthChanged += HandleHealthChanged;
         playerModel.OnCoinsChanged += HandleCoinsChanged;
         playerModel.OnDeath += HandleDeath;
+        playerModel.OnShoot += ShootHandler;
 
     }
 
@@ -36,6 +39,7 @@ public class PlayerView : MonoBehaviour
         playerModel.OnHealthChanged -= HandleHealthChanged;
         playerModel.OnCoinsChanged -= HandleCoinsChanged;
         playerModel.OnDeath -= HandleDeath;
+        playerModel.OnShoot -= ShootHandler;
 
     }
 
@@ -70,5 +74,11 @@ public class PlayerView : MonoBehaviour
     private void HandleDeath ()
     {
         Debug.Log("[VIEW TMP] El player fallecio. Mostra pantalla de game over");
+    }
+
+    private void ShootHandler(GameObject b)
+    {
+
+        Debug.Log("Disparo");
     }
 }
