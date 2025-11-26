@@ -1,54 +1,43 @@
+using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
-
-[System.Serializable]
 public class GameStateMemento
 {
-    public int level;
-    public int coins;
-    public int lives;
 
-    public GameStateMemento(int level, int coins, int lives)
+    List<GameStateStorage> _rememberPosition;
+
+    public GameStateMemento()
     {
-        this.level = level;
-        this.coins = coins;
-        this.lives = lives;
-    }
-}
 
-public class GameState : MonoBehaviour
-{
-    public int level;
-    public int coins;
-    public int lives;
+        _rememberPosition = new List<GameStateStorage>();
 
-    public GameStateMemento CreateMemento()
-    {
-        return new GameStateMemento(level, coins, lives);
     }
 
-    public void Restore(GameStateMemento memento)
+    public int MemoriesQuantity()
     {
-        level = memento.level;
-        coins = memento.coins;
-        lives = memento.lives;
-    }
-}
 
-public static class GameStateStorage
-{
-    private const string Key = "GAME_STATE";
+        return _rememberPosition.Count;
 
-    public static void Save(GameStateMemento memento)
-    {
-        string json = JsonUtility.ToJson(memento);
-        PlayerPrefs.SetString(Key, json);
-        PlayerPrefs.Save();
     }
 
-    public static GameStateMemento Load()
+    public GameStateStorage Remember()
     {
-        if (!PlayerPrefs.HasKey(Key)) return null;
-        string json = PlayerPrefs.GetString(Key);
-        return JsonUtility.FromJson<GameStateMemento>(json);
+
+        int index = _rememberPosition.Count - 1;
+
+        var currentPos = _rememberPosition[index];
+
+        _rememberPosition.RemoveAt(index);
+        
+        return currentPos;
+
     }
+
+    public void Rec(params object[] parameterWrapper)
+    {
+
+        _rememberPosition.Add(new GameStateStorage(parameterWrapper));
+
+    }
+
 }
