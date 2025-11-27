@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MenuButtons : MonoBehaviour
 {
-    [SerializeField] private ScreenManager screenManager;
+   /* [SerializeField] private ScreenManager screenManager;
 
     public void OnPlay()
     {
@@ -17,5 +17,5 @@ public class MenuButtons : MonoBehaviour
     public void OnBackToMenu()
     {
         screenManager.Show(ScreenId.MainMenu);
-    }
+    }*/
 }

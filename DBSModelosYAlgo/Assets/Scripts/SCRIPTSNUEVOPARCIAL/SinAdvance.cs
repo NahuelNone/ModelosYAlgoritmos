@@ -4,9 +4,9 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-public class SinAdvance : Advance
+/*public class SinAdvance : Advance
 {
-   /* private LookUpTable <float,float> ;
+    private LookUpTable <float,float> ;
 
     private Vector3 _newPosition;
     public SinAdvance(Transform transform, float speed) : base (transform , speed)
@@ -29,5 +29,5 @@ public class SinAdvance : Advance
         _newPosition.z += (_speed * Time.deltaTime);
 
         _transform.position = _newPosition;
-    }*/
-}
+    }
+}*/

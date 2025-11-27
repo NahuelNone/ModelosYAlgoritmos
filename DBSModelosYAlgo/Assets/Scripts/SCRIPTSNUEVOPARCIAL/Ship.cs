@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
-    [SerializeField] private float _speed;
+   /* [SerializeField] private float _speed;
     [SerializeField] private Transform _target;
     [SerializeField] private float _StoppingRadius;
 
@@ -43,7 +43,7 @@ public class Ship : MonoBehaviour
 
         _currentAdvance.Advance();
 
-    }
+    }*/
 
 
 
