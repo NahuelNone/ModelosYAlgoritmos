@@ -24,19 +24,22 @@ public class ClientDebugger : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
+
             ScreenManager.Instance.Push(new ScreenGameplay(Instantiate(_miniGameplay)));
+
         }
-        else if (Input.GetKeyDown(KeyCode.P))
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
         }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (isPaused)
-                TogglePause(); // salir del menú de pausa
-            else
-                ScreenManager.Instance.Pop();
-        }
+        //else if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    if (isPaused)
+        //        TogglePause(); // salir del menú de pausa
+        //    else
+        //        ScreenManager.Instance.Pop();
+        //}
     }
 
     void TogglePause()

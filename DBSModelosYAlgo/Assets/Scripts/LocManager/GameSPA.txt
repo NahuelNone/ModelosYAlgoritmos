@@ -1,5 +1,8 @@
 {
-"IDButtonJugar" : "Jugar",
-"IDButtonSalir" : "Salir",
-"IDButtonAtras" : "Atras"
+"IDButtonJugar" : "Jugar"|
+"IDButtonAtras" : "Atras"|
+"IDButtonPausa" : "Pausa"|
+"IDButtonOpciones" : "Opciones"|
+"IDButtonEsp" : "Español"|
+"IDButtonIngles" : "Ingles"
 }

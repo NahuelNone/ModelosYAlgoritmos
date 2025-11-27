@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Unity.VisualScripting.Icons;
 
 public class LocalizationManager : MonoBehaviour
 {
@@ -18,23 +17,19 @@ public class LocalizationManager : MonoBehaviour
 
     private void Awake()
     {
-
-        if (instance != null)
+        if (instance == null)
         {
-
             instance = this;
-
+            DontDestroyOnLoad(gameObject); // opcional
+            _translate = LanguageU.GetTranslate(data);
         }
-        else
+        else if (instance != this)
         {
-
-            Destroy(this);
-
+            Destroy(gameObject);
         }
-
-        _translate = LanguageU.GetTranslate(data);
-
     }
+
+
 
     public void ChangeLang(LocalizationLang newLang)
     {
@@ -46,6 +41,16 @@ public class LocalizationManager : MonoBehaviour
         if (EventChangeLang != null)
             EventChangeLang();
 
+    }
+
+    public void SetSpanish()
+    {
+        ChangeLang(LocalizationLang.Spanish);
+    }
+
+    public void SetEnglish()
+    {
+        ChangeLang(LocalizationLang.English);
     }
 
     public string Translate(string ID)
