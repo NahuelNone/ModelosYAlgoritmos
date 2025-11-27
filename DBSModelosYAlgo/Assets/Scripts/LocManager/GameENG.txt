@@ -4,5 +4,7 @@
 "IDButtonOpciones" : "Options"|
 "IDButtonPausa" : "Pause"|
 "IDButtonEsp" : "Spanish"|
-"IDButtonIngles" : "English"
+"IDButtonIngles" : "English"|
+"IDButtonVida" : "Life"|
+"IDButtonAlgo" : "Something"
 }

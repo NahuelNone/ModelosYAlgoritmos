@@ -6,7 +6,7 @@ public class Health : MonoBehaviour
 {
     [Header("Atributos de Vida")]
     public float maxHealth = 100f;  // Vida máxima
-    private float currentHealth;     // Vida actual
+    public float currentHealth;     // Vida actual
 
     private void Start()
     {

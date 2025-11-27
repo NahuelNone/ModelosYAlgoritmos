@@ -16,7 +16,7 @@ public class TXTTranslate : MonoBehaviour
 
     private void OnEnable()
     {
-        // Me suscribo al evento de cambio de idioma
+
         if (LocalizationManager.instance != null)
         {
 
@@ -24,14 +24,13 @@ public class TXTTranslate : MonoBehaviour
 
         }
 
-        // Traducción inicial
         Translate();
 
     }
 
     private void OnDisable()
     {
-        // Me desuscribo para evitar memory leaks
+        
         if (LocalizationManager.instance != null)
         {
             LocalizationManager.instance.EventChangeLang -= Translate;
@@ -44,7 +43,7 @@ public class TXTTranslate : MonoBehaviour
         if (LocalizationManager.instance == null)
         {
 
-            // Por si algo falló
+            
             return;
 
         }

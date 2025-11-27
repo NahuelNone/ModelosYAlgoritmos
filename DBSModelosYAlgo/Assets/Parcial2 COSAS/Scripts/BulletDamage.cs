@@ -13,8 +13,17 @@ public class BulletDamage : MonoBehaviour
 
         if (targetHealth != null)
         {
+
+            if (collision.gameObject.CompareTag("Enemigo"))
+            {
+
+                // Si tiene vida, le aplicamos daño
+                targetHealth.TakeDamage(damage);
+
+            }
+
             // Si tiene vida, le aplicamos daño
-            targetHealth.TakeDamage(damage);
+            //targetHealth.TakeDamage(damage);
         }
 
         // Destruimos la bala después del impacto

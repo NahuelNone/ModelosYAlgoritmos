@@ -45,12 +45,16 @@ public class LocalizationManager : MonoBehaviour
 
     public void SetSpanish()
     {
+
         ChangeLang(LocalizationLang.Spanish);
+
     }
 
     public void SetEnglish()
     {
+
         ChangeLang(LocalizationLang.English);
+
     }
 
     public string Translate(string ID)
