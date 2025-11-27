@@ -1,0 +1,5 @@
+{
+"IDButtonJugar" : "Jugar",
+"IDButtonSalir" : "Salir",
+"IDButtonAtras" : "Atras"
+}

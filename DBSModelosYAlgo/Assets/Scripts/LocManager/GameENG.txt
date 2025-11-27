@@ -1,0 +1,5 @@
+{
+"IDButtonPlay" : "Play",
+"IDButtonExit" : "Exit",
+"IDButtonBack" : "Back"
+}

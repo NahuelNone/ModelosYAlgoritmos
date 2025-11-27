@@ -13,9 +13,11 @@ public class ClientDebugger : MonoBehaviour
 
     private void Start()
     {
+
         var main = new ScreenGameplay(_mainGameplay);
 
         ScreenManager.Instance.Push(main);
+
     }
 
     private void Update()

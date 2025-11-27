@@ -16,29 +16,37 @@ public class ScreenGameplay : IScreen
 
         foreach (Transform item in _root.transform)
         {
-            item.GetComponent<Renderer>().material.color = Color.green;
+        
+            item.GetComponent<Renderer>().material.color = Color.blue;
+        
         }
     }
 
     public void Activate()
     {
+
         foreach (var pair in _beforeDeactivation)
         {
+
             pair.Key.enabled = pair.Value;
 
-            pair.Key.GetComponent<Renderer>().material.color = Color.green;
+            pair.Key.GetComponent<Renderer>();
+
         }
+
     }
 
     public void Desactivate()
     {
         foreach (var behaviour in _root.GetComponentsInChildren<Behaviour>())
         {
+        
             _beforeDeactivation[behaviour] = behaviour.enabled;
-
+        
             behaviour.enabled = false;
-
-            behaviour.GetComponent<Renderer>().material.color = Color.red;
+        
+            behaviour.GetComponent<Renderer>().material.color = Color.blue;
+        
         }
     }
 
