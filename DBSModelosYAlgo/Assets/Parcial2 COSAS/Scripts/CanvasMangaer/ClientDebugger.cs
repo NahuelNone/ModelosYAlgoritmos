@@ -11,35 +11,60 @@ public class ClientDebugger : MonoBehaviour
 
     private bool isPaused = false;
 
+    private ScreenGameplay _miniScreen;
+    private Transform _miniInstance;
+    private bool _miniActive = false;
+
     private void Start()
     {
-
         var main = new ScreenGameplay(_mainGameplay);
-
         ScreenManager.Instance.Push(main);
-
     }
 
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.M))
         {
+            ShowMiniGameplay();
+        }
 
-            ScreenManager.Instance.Push(new ScreenGameplay(Instantiate(_miniGameplay)));
-
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            HideMiniGameplay();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             TogglePause();
         }
-        //else if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    if (isPaused)
-        //        TogglePause(); // salir del menú de pausa
-        //    else
-        //        ScreenManager.Instance.Pop();
-        //}
+    }
+
+    void ShowMiniGameplay()
+    {
+        if (_miniActive) return;
+
+        _miniInstance = Instantiate(_miniGameplay);
+        _miniScreen = new ScreenGameplay(_miniInstance);
+
+        ScreenManager.Instance.Push(_miniScreen);
+        _miniActive = true;
+    }
+
+    void HideMiniGameplay()
+    {
+        if (!_miniActive) return;
+
+        ScreenManager.Instance.Pop();
+
+        if (_miniInstance != null)
+        {
+            _miniInstance.gameObject.SetActive(false);
+        }
+
+        _miniScreen = null;
+        _miniInstance = null;
+        _miniActive = false;
     }
 
     void TogglePause()
@@ -53,7 +78,7 @@ public class ClientDebugger : MonoBehaviour
         else
         {
             ScreenManager.Instance.Pop();
-            _pauseScreen.gameObject.SetActive(false); // 🔹 aseguro que el canvas desaparezca
+            _pauseScreen.gameObject.SetActive(false);
             Time.timeScale = 1f;
             isPaused = false;
         }

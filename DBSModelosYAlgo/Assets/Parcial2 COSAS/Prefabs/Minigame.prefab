@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 6714564771052569090}
   - component: {fileID: 5317521303035758859}
   m_Layer: 0
-  m_Name: e
+  m_Name: Pantalla
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -28,6 +28,7 @@ public class ScreenManager : MonoBehaviour
         _screenStack.Push(newScreen);
 
         newScreen.Activate();
+
     }
 
     public void Pop()
