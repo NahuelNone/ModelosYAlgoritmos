@@ -32,19 +32,3 @@ public class ZigZagMovement : IMovementStrategy
         t.Translate(new Vector3(speed * Time.deltaTime, y * Time.deltaTime, 0));
     }
 }
-
-// Contexto
-public class Enemy : MonoBehaviour
-{
-    private IMovementStrategy movementStrategy;
-
-    public void SetMovement(IMovementStrategy strategy)
-    {
-        movementStrategy = strategy;
-    }
-
-    void Update()
-    {
-        movementStrategy?.Move(transform);
-    }
-}
