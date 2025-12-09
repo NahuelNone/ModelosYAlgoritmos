@@ -6,7 +6,7 @@ using UnityEngine;
 public class ScreenManagerFinal : MonoBehaviour
 {
 
-    Stack<IScreen> _stack;
+    Stack<IScreenFinal> _stack;
     
     public string lastResult;
     
@@ -17,11 +17,11 @@ public class ScreenManagerFinal : MonoBehaviour
     
         Instance = this;
     
-        _stack = new Stack<IScreen>();
+        _stack = new Stack<IScreenFinal>();
     
     }
     
-    public void pop()
+    public void Pop()
     {
     
         if (_stack.Count <= 1) return;
@@ -37,7 +37,7 @@ public class ScreenManagerFinal : MonoBehaviour
     
     }
     
-    public void Push(IScreen screen)
+    public void Push(IScreenFinal screen)
     {
     
         if (_stack.Count > 0)
@@ -46,7 +46,11 @@ public class ScreenManagerFinal : MonoBehaviour
             _stack.Peek().Deactivate();
     
         }
-    
+
+        _stack.Push(screen);
+
+        screen.Active();
+
     }
     
     public void Push(string resources)
@@ -54,7 +58,7 @@ public class ScreenManagerFinal : MonoBehaviour
     
         var go = Instantiate(Resources.Load<GameObject>(resources));
     
-        Push(go.GetComponent<IScreen>());
+        Push(go.GetComponent<IScreenFinal>());
     
     }
 
