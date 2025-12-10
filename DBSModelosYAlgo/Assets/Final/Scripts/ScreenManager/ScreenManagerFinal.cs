@@ -11,7 +11,10 @@ public class ScreenManagerFinal : MonoBehaviour
     public string lastResult;
     
     static public ScreenManagerFinal Instance;
-    
+
+    public int ScreenCount => _stack.Count;
+
+
     void Awake()
     {
     

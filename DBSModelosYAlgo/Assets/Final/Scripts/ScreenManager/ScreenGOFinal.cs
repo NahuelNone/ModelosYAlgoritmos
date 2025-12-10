@@ -30,11 +30,11 @@ public class ScreenGOFinal : IScreenFinal
 
     public string Free()
     {
-        // Si alguna vez querés destruir el nivel (por ejemplo al cambiar de escena),
-        // se hace acá.
+        // Acá SÍ apagamos el juego cuando se saca
+        // esta pantalla del stack (p.ej. al volver al menú)
         if (root != null)
-            GameObject.Destroy(root.gameObject);
+            root.gameObject.SetActive(false);
 
-        return "Delete una pantalla jugable";
+        return "Pantalla jugable desactivada";
     }
 }

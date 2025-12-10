@@ -61,4 +61,12 @@ public class ScreenPauseFinal : MonoBehaviour, IScreenFinal
         return _result;
     }
 
+    public void BTN_Menu()
+    {
+        if (configSMFinal != null)
+            configSMFinal.ReturnToMenu();
+        else
+            Debug.LogWarning("ConfigSMFinal no encontrado desde pausa.");
+    }
+
 }
