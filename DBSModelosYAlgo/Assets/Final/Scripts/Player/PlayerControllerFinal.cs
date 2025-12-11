@@ -11,7 +11,7 @@ public class PlayerControllerFinal : MonoBehaviour
     public string groundTag = "Ground";
 
     [Header("Pool / Arma")]
-    public BulletPoolFinal bulletPool;       // 🔹 asigná el objeto con BulletPool
+    public BulletPoolFinal bulletPool;
     public float bulletSpeed = 15f;
     public float bulletLifeTime = 2f;
     public float bulletDamage = 10f;
@@ -25,6 +25,9 @@ public class PlayerControllerFinal : MonoBehaviour
         if (view == null)
             view = GetComponent<PlayerViewFinal>();
 
+        model.OnHealthChanged += HandleHealthChanged;
+        model.OnDeath += HandleDeath;
+
         if (bulletPool != null)
         {
             _bulletFactory = new BulletFactoryFinal(bulletPool);
@@ -35,6 +38,12 @@ public class PlayerControllerFinal : MonoBehaviour
             Debug.LogWarning("BulletPool no asignado en PlayerController. No se podrá disparar.");
         }
     }
+
+    private void Start()
+    {
+        model.Init();               // inicializa vida y dispara OnHealthChanged
+    }
+
 
     private void Update()
     {
@@ -57,10 +66,9 @@ public class PlayerControllerFinal : MonoBehaviour
         view.Move(_horizontalInput, model.moveSpeed);
     }
 
-    // W para saltar / doble salto
     private void ManejarSalto()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
             if (model.CanJump())
             {
@@ -69,6 +77,7 @@ public class PlayerControllerFinal : MonoBehaviour
             }
         }
     }
+
 
     // Space para atacar
     private void ManejarAtaque()
@@ -106,4 +115,44 @@ public class PlayerControllerFinal : MonoBehaviour
             view.SetGrounded(false);
         }
     }
+
+    public void ReceiveDamage(float amount)
+    {
+        // 1) Actualizar modelo
+        model.TakeDamage(amount);
+
+        // 2) Actualizar vista/UI
+        view.UpdateHealthUI((int)model.CurrentHealth, model.maxHealth);
+
+        Debug.Log("Vida actual del player: " + model.CurrentHealth);
+
+        // 3) ¿murió?
+        if (model.IsDead)
+        {
+            HandleDeath();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            ReceiveDamage(20f); // o el daño que quieras
+        }
+    }
+
+    private void HandleHealthChanged(int current, int max)
+    {
+        view.UpdateHealthUI(current, max);
+    }
+
+    private void HandleDeath()
+    {
+        view.PlayDeath();
+        Debug.Log("El jugador murió (evento del Model)");
+
+        // Podés además desactivar input, llamar GameManager, etc.
+    }
+
+
 }

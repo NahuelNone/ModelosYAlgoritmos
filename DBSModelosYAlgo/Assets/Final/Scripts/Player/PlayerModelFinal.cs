@@ -4,6 +4,11 @@ using UnityEngine;
 [Serializable]
 public class PlayerModelFinal
 {
+
+    // EVENTOS
+    public event Action<int, int> OnHealthChanged;   // current, max
+    public event Action OnDeath;
+
     [Header("Movimiento")]
     public float moveSpeed = 5f;
 
@@ -14,22 +19,31 @@ public class PlayerModelFinal
     private int _jumpsUsed = 0;
     private bool _isGrounded = false;
 
-    // 🔽 NUEVO: ATAQUE
     [Header("Ataque")]
-    public float attackCooldown = 0.25f; // tiempo entre ataques
+    public float attackCooldown = 0.25f;
     private float _attackCooldownTimer = 0f;
+
+    // 🔹 VIDA
+    [Header("Vida")]
+    public int maxHealth = 100;
+    private int _currentHealth;
 
     public bool IsGrounded => _isGrounded;
     public int JumpsUsed => _jumpsUsed;
 
+    public float CurrentHealth => _currentHealth;
+    public bool IsDead => _currentHealth <= 0;
+
+    public void Init()
+    {
+        _currentHealth = maxHealth;
+        OnHealthChanged?.Invoke(_currentHealth, maxHealth);
+    }
+
     public void SetGrounded(bool grounded)
     {
         _isGrounded = grounded;
-
-        if (grounded)
-        {
-            _jumpsUsed = 0;
-        }
+        if (grounded) _jumpsUsed = 0;
     }
 
     public bool CanJump()
@@ -43,7 +57,6 @@ public class PlayerModelFinal
         _isGrounded = false;
     }
 
-    // 🔽 NUEVO: ATAQUE
     public void TickAttackCooldown(float deltaTime)
     {
         if (_attackCooldownTimer > 0)
@@ -59,4 +72,19 @@ public class PlayerModelFinal
     {
         _attackCooldownTimer = attackCooldown;
     }
+
+    // 🔹 Recibir daño / curación
+    public void TakeDamage(float amount)
+    {
+        _currentHealth = (int)Mathf.Clamp(_currentHealth - amount, 0f, maxHealth);
+    }
+
+    public void Heal(int amount)
+    {
+        if (IsDead) return;
+
+        _currentHealth = Mathf.Clamp(_currentHealth + amount, 0, maxHealth);
+        OnHealthChanged?.Invoke(_currentHealth, maxHealth);
+    }
+
 }
