@@ -5,9 +5,9 @@ public class RangedWeaponFinal : IWeaponFinal
     private BulletFactoryFinal _factory;
     private float _bulletSpeed;
     private float _bulletLifeTime;
-    private float _bulletDamage;
+    private int _bulletDamage;
 
-    public RangedWeaponFinal(BulletFactoryFinal factory, float bulletSpeed, float bulletLifeTime, float bulletDamage)
+    public RangedWeaponFinal(BulletFactoryFinal factory, float bulletSpeed, float bulletLifeTime, int bulletDamage)
     {
         _factory = factory;
         _bulletSpeed = bulletSpeed;

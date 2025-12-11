@@ -14,7 +14,7 @@ public class ChaseMoveStrategy : IMoveStrategy
         _stopDistance = stopDistance;
     }
 
-    public void Move(Enemy enemy, Rigidbody2D rb)
+    public void Move(EnemyFinal enemy, Rigidbody2D rb)
     {
         if (_player == null) return;
 

@@ -15,7 +15,7 @@ public class RangedAttackStrategy : IAttackStrategy
         _bulletPrefab = bulletPrefab;
     }
 
-    public void Attack(Enemy enemy, Transform target)
+    public void Attack(EnemyFinal enemy, Transform target)
     {
         if (target == null || _bulletPrefab == null) return;
 

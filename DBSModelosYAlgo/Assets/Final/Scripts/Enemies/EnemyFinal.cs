@@ -4,12 +4,17 @@ public enum MoveType { Patrol, Chase }
 public enum AttackType { Melee, Ranged }
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Enemy : MonoBehaviour
+public class EnemyFinal : MonoBehaviour
 {
     [Header("Config general")]
     public MoveType moveType;
     public AttackType attackType;
     public float moveSpeed = 2f;
+
+    [Header("Vida")]
+    [SerializeField] private int maxHealth = 3;
+    [SerializeField] private int currentHealth;
+    public int CurrentHealth => currentHealth;
 
     [Header("Movimiento Patrulla")]
     public Transform[] patrolPoints;
@@ -29,6 +34,9 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+
+        // inicializar vida
+        currentHealth = maxHealth;
 
         // Elegir estrategia de movimiento
         switch (moveType)
@@ -55,12 +63,37 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        _moveStrategy?.Move(this, _rb);
+    }
+
     private void Update()
     {
         if (player == null) return;
-
-        _moveStrategy?.Move(this, _rb);
         _attackStrategy?.Attack(this, player);
+    }
+
+    // ----------- VIDA ------------
+
+    public void TakeDamage(int amount)
+    {
+        currentHealth -= amount;
+        if (currentHealth < 0) currentHealth = 0;
+
+        Debug.Log($"[{name}] recibe {amount} de daño. Vida: {currentHealth}/{maxHealth}");
+
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log($"[{name}] muere");
+        // acá podés poner animación, sonido, etc.
+        Destroy(gameObject);
     }
 
     // Permite cambiar la estrategia en runtime (opcional)

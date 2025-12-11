@@ -13,7 +13,7 @@ public class MeleeAttackStrategy : IAttackStrategy
         _cooldown = cooldown;
     }
 
-    public void Attack(Enemy enemy, Transform target)
+    public void Attack(EnemyFinal enemy, Transform target)
     {
         if (target == null) return;
 

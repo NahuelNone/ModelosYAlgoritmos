@@ -14,7 +14,7 @@ public class PlayerControllerFinal : MonoBehaviour
     public BulletPoolFinal bulletPool;
     public float bulletSpeed = 15f;
     public float bulletLifeTime = 2f;
-    public float bulletDamage = 10f;
+    public int bulletDamage = 10;
 
     private float _horizontalInput;
     private IWeaponFinal _currentWeapon;

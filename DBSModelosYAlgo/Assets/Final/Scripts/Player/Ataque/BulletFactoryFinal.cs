@@ -12,7 +12,7 @@ public class BulletFactoryFinal
     /// <summary>
     /// Crea/configura una bala usando el pool.
     /// </summary>
-    public BulletFinal CreateBullet(Vector2 position, Vector2 direction, float speed, float lifeTime, float damage)
+    public BulletFinal CreateBullet(Vector2 position, Vector2 direction, float speed, float lifeTime, int damage)
     {
         BulletFinal bulletFinal = _pool.GetBullet();
 

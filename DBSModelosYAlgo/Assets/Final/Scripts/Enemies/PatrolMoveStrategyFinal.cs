@@ -14,7 +14,7 @@ public class PatrolMoveStrategy : IMoveStrategy
         _currentIndex = 0;
     }
 
-    public void Move(Enemy enemy, Rigidbody2D rb)
+    public void Move(EnemyFinal enemy, Rigidbody2D rb)
     {
         if (_points == null || _points.Length == 0) return;
 

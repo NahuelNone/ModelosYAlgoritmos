@@ -1,3 +1,4 @@
+using Builder;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -7,8 +8,9 @@ public class BulletFinal : MonoBehaviour
 
     private float _lifeTime;
     private float _timer;
-    private float _damage;
+    private int _damage;
     private BulletPoolFinal _pool;
+    //private EnemyFinal enemy;
 
     private void Reset()
     {
@@ -18,7 +20,7 @@ public class BulletFinal : MonoBehaviour
     /// <summary>
     /// Inicializa la bala (la llama la BulletFactory)
     /// </summary>
-    public void Init(BulletPoolFinal pool, Vector2 direction, float speed, float lifeTime, float damage)
+    public void Init(BulletPoolFinal pool, Vector2 direction, float speed, float lifeTime, int damage)
     {
         _pool = pool;
         _lifeTime = lifeTime;
@@ -45,6 +47,15 @@ public class BulletFinal : MonoBehaviour
         // TODO: acá más adelante podés chequear si es enemigo y aplicarle daño
         // if (other.CompareTag("Enemigo")) { ... }
 
+        EnemyFinal enemy = other.GetComponent<EnemyFinal>();
+
+        int damage = _damage;
+
+        if (other.CompareTag("Enemy"))
+        {
+            enemy.TakeDamage(damage);
+        }
+
         Desactivar();
     }
 
@@ -58,4 +69,5 @@ public class BulletFinal : MonoBehaviour
         else
             gameObject.SetActive(false);
     }
+
 }
