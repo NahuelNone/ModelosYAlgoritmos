@@ -1,32 +1,50 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(PlayerView))]
+[RequireComponent(typeof(PlayerViewFinal))]
 public class PlayerControllerFinal : MonoBehaviour
 {
     [Header("MVC")]
     public PlayerViewFinal view;
     public PlayerModelFinal model = new PlayerModelFinal();
 
-    [Header("Ground Check (opcional, simple por tag)")]
+    [Header("Ground Check (simple por tag)")]
     public string groundTag = "Ground";
 
+    [Header("Pool / Arma")]
+    public BulletPoolFinal bulletPool;       // 🔹 asigná el objeto con BulletPool
+    public float bulletSpeed = 15f;
+    public float bulletLifeTime = 2f;
+    public float bulletDamage = 10f;
+
     private float _horizontalInput;
+    private IWeaponFinal _currentWeapon;
+    private BulletFactoryFinal _bulletFactory;
 
     private void Awake()
     {
         if (view == null)
             view = GetComponent<PlayerViewFinal>();
+
+        if (bulletPool != null)
+        {
+            _bulletFactory = new BulletFactoryFinal(bulletPool);
+            _currentWeapon = new RangedWeaponFinal(_bulletFactory, bulletSpeed, bulletLifeTime, bulletDamage);
+        }
+        else
+        {
+            Debug.LogWarning("BulletPool no asignado en PlayerController. No se podrá disparar.");
+        }
     }
 
     private void Update()
     {
-        // 🔽 Actualizamos cooldown de ataque
+        // Cooldown de ataque
         model.TickAttackCooldown(Time.deltaTime);
 
         LeerInputMovimiento();
         ManejarMovimiento();
         ManejarSalto();
-        ManejarAtaque();   // 🔽 nuevo
+        ManejarAtaque();
     }
 
     private void LeerInputMovimiento()
@@ -39,10 +57,10 @@ public class PlayerControllerFinal : MonoBehaviour
         view.Move(_horizontalInput, model.moveSpeed);
     }
 
-    // 🔴 CAMBIO: salto ahora con W
+    // W para saltar / doble salto
     private void ManejarSalto()
     {
-        if (Input.GetKeyDown(KeyCode.W))   // antes: Input.GetButtonDown("Jump")
+        if (Input.GetKeyDown(KeyCode.W))
         {
             if (model.CanJump())
             {
@@ -52,22 +70,25 @@ public class PlayerControllerFinal : MonoBehaviour
         }
     }
 
-    // 🟢 NUEVO: ataque con barra espaciadora
+    // Space para atacar
     private void ManejarAtaque()
     {
         if (Input.GetKeyDown(KeyCode.Space) && model.CanAttack())
         {
             model.OnAttack();
 
-            // Vista (animación, etc.)
-            view.Attack();
-
-            // Lógica actual (más adelante armas de verdad)
-            Debug.Log("ATAQUE! (acá después voy a disparar el arma actual)");
+            if (_currentWeapon != null)
+            {
+                _currentWeapon.Attack(view);
+            }
+            else
+            {
+                Debug.Log("ATAQUE (sin arma configurada todavía)");
+            }
         }
     }
 
-    // Suelo por tag, igual que antes
+    // Suelo por tag
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(groundTag))
