@@ -13,14 +13,12 @@ public class ScreenLevelsFinal : MonoBehaviour, IScreenFinal
     public void Active()
     {
         gameObject.SetActive(true);
-        foreach (var b in _buttons)
-            b.interactable = true;
+        foreach (var b in _buttons) b.interactable = true;
     }
 
     public void Deactivate()
     {
-        foreach (var b in _buttons)
-            b.interactable = false;
+        foreach (var b in _buttons) b.interactable = false;
         gameObject.SetActive(false);
     }
 
@@ -38,29 +36,18 @@ public class ScreenLevelsFinal : MonoBehaviour, IScreenFinal
     public void BTN_Level1()
     {
         var config = FindObjectOfType<ConfigSMFinal>();
-        if (config != null)
-            config.StartGame();
-        else
-            Debug.LogWarning("ConfigSMFinal no encontrado desde ScreenLevelsFinal.");
+        if (config != null) config.StartLevel(1);
     }
 
     public void BTN_Level2()
     {
         var config = FindObjectOfType<ConfigSMFinal>();
-        if (config != null)
-            config.StartGame();
-        else
-            Debug.LogWarning("ConfigSMFinal no encontrado desde ScreenLevelsFinal.");
+        if (config != null) config.StartLevel(2);
     }
 
     public void BTN_Level3()
     {
         var config = FindObjectOfType<ConfigSMFinal>();
-        if (config != null)
-            config.StartGame();
-        else
-            Debug.LogWarning("ConfigSMFinal no encontrado desde ScreenLevelsFinal.");
+        if (config != null) config.StartLevel(3);
     }
-
-
 }

@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using UnityEngine;
 
 [Serializable]
@@ -14,6 +14,11 @@ public class PlayerModelFinal
     private int _jumpsUsed = 0;
     private bool _isGrounded = false;
 
+    // ðŸ”½ NUEVO: ATAQUE
+    [Header("Ataque")]
+    public float attackCooldown = 0.25f; // tiempo entre ataques
+    private float _attackCooldownTimer = 0f;
+
     public bool IsGrounded => _isGrounded;
     public int JumpsUsed => _jumpsUsed;
 
@@ -23,14 +28,12 @@ public class PlayerModelFinal
 
         if (grounded)
         {
-            // Si tocamos el piso, reseteamos los saltos
             _jumpsUsed = 0;
         }
     }
 
     public bool CanJump()
     {
-        // Puede saltar si está en el piso o si todavía le queda un salto extra
         return _isGrounded || _jumpsUsed < maxJumps;
     }
 
@@ -38,5 +41,22 @@ public class PlayerModelFinal
     {
         _jumpsUsed++;
         _isGrounded = false;
+    }
+
+    // ðŸ”½ NUEVO: ATAQUE
+    public void TickAttackCooldown(float deltaTime)
+    {
+        if (_attackCooldownTimer > 0)
+            _attackCooldownTimer -= deltaTime;
+    }
+
+    public bool CanAttack()
+    {
+        return _attackCooldownTimer <= 0f;
+    }
+
+    public void OnAttack()
+    {
+        _attackCooldownTimer = attackCooldown;
     }
 }

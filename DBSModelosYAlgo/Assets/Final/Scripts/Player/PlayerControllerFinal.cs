@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-[RequireComponent(typeof(PlayerViewFinal))]
+[RequireComponent(typeof(PlayerView))]
 public class PlayerControllerFinal : MonoBehaviour
 {
     [Header("MVC")]
@@ -20,9 +20,13 @@ public class PlayerControllerFinal : MonoBehaviour
 
     private void Update()
     {
+        // 🔽 Actualizamos cooldown de ataque
+        model.TickAttackCooldown(Time.deltaTime);
+
         LeerInputMovimiento();
         ManejarMovimiento();
         ManejarSalto();
+        ManejarAtaque();   // 🔽 nuevo
     }
 
     private void LeerInputMovimiento()
@@ -35,9 +39,10 @@ public class PlayerControllerFinal : MonoBehaviour
         view.Move(_horizontalInput, model.moveSpeed);
     }
 
+    // 🔴 CAMBIO: salto ahora con W
     private void ManejarSalto()
     {
-        if (Input.GetButtonDown("Jump")) // por defecto, tecla Space
+        if (Input.GetKeyDown(KeyCode.W))   // antes: Input.GetButtonDown("Jump")
         {
             if (model.CanJump())
             {
@@ -47,7 +52,22 @@ public class PlayerControllerFinal : MonoBehaviour
         }
     }
 
-    // Manejo MUY simple de suelo usando tag "Ground"
+    // 🟢 NUEVO: ataque con barra espaciadora
+    private void ManejarAtaque()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && model.CanAttack())
+        {
+            model.OnAttack();
+
+            // Vista (animación, etc.)
+            view.Attack();
+
+            // Lógica actual (más adelante armas de verdad)
+            Debug.Log("ATAQUE! (acá después voy a disparar el arma actual)");
+        }
+    }
+
+    // Suelo por tag, igual que antes
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(groundTag))

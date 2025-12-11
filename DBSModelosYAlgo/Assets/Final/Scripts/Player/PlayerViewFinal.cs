@@ -63,4 +63,13 @@ public class PlayerViewFinal : MonoBehaviour
             animator.SetBool("IsGrounded", grounded);
         }
     }
+
+    public void Attack()
+    {
+        
+        Debug.Log("Player attacked!");
+
+    }
+
+
 }

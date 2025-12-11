@@ -1,59 +1,97 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class ConfigSMFinal : MonoBehaviour
 {
-    public Transform mainGame = null;          // root del juego
-    public ScreenMenuFinal menuScreen = null;  // referencia al menú en escena
+    // Raíces de cada nivel (asignar en el Inspector)
+    public Transform level1Root;
+    public Transform level2Root;
+    public Transform level3Root;
+
+    // Menú principal (asignar el objeto que tiene ScreenMenuFinal)
+    public ScreenMenuFinal menuScreen;
+
+    // Nivel actualmente activo
+    private Transform currentLevelRoot;
 
     public bool pausa;
 
     private void Start()
     {
-        // 1) El juego todavía no va
-        if (mainGame != null)
-            mainGame.gameObject.SetActive(false);
+        // Apagamos todos los niveles al arrancar
+        if (level1Root != null) level1Root.gameObject.SetActive(false);
+        if (level2Root != null) level2Root.gameObject.SetActive(false);
+        if (level3Root != null) level3Root.gameObject.SetActive(false);
 
-        // 2) Arrancamos en el MENÚ
+        currentLevelRoot = null;
+
+        // Arrancamos en el menú
         ScreenManagerFinal.Instance.Push(menuScreen);
-
         pausa = false;
     }
 
     private void Update()
     {
-        // No procesamos ESC si no se presionó
         if (!Input.GetKeyDown(KeyCode.Escape))
             return;
 
-        // No queremos pausa en el menú:
-        if (mainGame == null || !mainGame.gameObject.activeInHierarchy)
+        // Si no hay nivel activo, estamos en menú / niveles → no hay pausa
+        if (currentLevelRoot == null || !currentLevelRoot.gameObject.activeInHierarchy)
             return;
 
-        // Si hay un mensaje arriba, primero cerramos el mensaje
+        // Si hay una pantalla de mensaje arriba, ESC la cierra primero
         if (FindObjectOfType<ScreenMessageFinal>() != null)
         {
             ScreenManagerFinal.Instance.Pop();
             return;
         }
 
-        // Toglear pausa solo cuando estamos en el juego
         if (!pausa)
             OpenPause();
         else
             ClosePause();
     }
 
-    // ---- llamado por ScreenMenuFinal.BTN_Play ----
+    // --- Arrancar juego rápido desde el botón JUGAR del menú ---
     public void StartGame()
     {
-        if (mainGame != null)
-            mainGame.gameObject.SetActive(true);
+        StartLevel(1);
+    }
 
-        // Apilamos el juego como nueva pantalla
-        ScreenManagerFinal.Instance.Push(new ScreenGOFinal(mainGame));
+    // --- Arrancar un nivel concreto desde la pantalla de niveles ---
+    public void StartLevel(int levelIndex)
+    {
+        // Apagamos todos los niveles
+        if (level1Root != null) level1Root.gameObject.SetActive(false);
+        if (level2Root != null) level2Root.gameObject.SetActive(false);
+        if (level3Root != null) level3Root.gameObject.SetActive(false);
+
+        Transform chosen = null;
+
+        switch (levelIndex)
+        {
+            case 1: chosen = level1Root; break;
+            case 2: chosen = level2Root; break;
+            case 3: chosen = level3Root; break;
+            default:
+                Debug.LogError("Nivel inválido: " + levelIndex);
+                return;
+        }
+
+        if (chosen == null)
+        {
+            Debug.LogError("No se asignó el Transform del nivel " + levelIndex + " en ConfigSMFinal.");
+            return;
+        }
+
+        // Guardamos cuál es el nivel actual
+        currentLevelRoot = chosen;
+
+        // Encendemos ese nivel
+        chosen.gameObject.SetActive(true);
+
+        // Lo apilamos como pantalla jugable
+        ScreenManagerFinal.Instance.Push(new ScreenGOFinal(chosen));
     }
 
     public void OpenPause()
@@ -68,7 +106,7 @@ public class ConfigSMFinal : MonoBehaviour
 
         PauseManagerFinal pm = FindObjectOfType<PauseManagerFinal>();
         if (pm != null)
-            pm.TogglePause();  // Time.timeScale = 0
+            pm.TogglePause();   // Time.timeScale = 0
 
         pausa = true;
         Debug.Log("Pausa");
@@ -78,27 +116,23 @@ public class ConfigSMFinal : MonoBehaviour
     {
         if (!pausa) return;
 
-        ScreenManagerFinal.Instance.Pop();
+        ScreenManagerFinal.Instance.Pop();   // saca la pantalla de pausa
 
         PauseManagerFinal pm = FindObjectOfType<PauseManagerFinal>();
         if (pm != null)
-            pm.TogglePause();  // Time.timeScale = 1
+            pm.TogglePause();   // Time.timeScale = 1
 
         pausa = false;
         Debug.Log("Cerrando pausa");
     }
 
+    // Desde el menú de pausa: volver al menú principal y reiniciar todo
     public void ReturnToMenu()
     {
-        // Asegurarnos de que el tiempo vuelve a la normalidad
         Time.timeScale = 1f;
         pausa = false;
 
-        // Recargamos la escena actual
-        Scene sceneActual = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(sceneActual.buildIndex);
+        var scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.buildIndex);
     }
-
-
-
 }
