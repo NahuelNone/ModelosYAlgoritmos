@@ -6,11 +6,24 @@ public class BulletFinal : MonoBehaviour
 {
     public Rigidbody2D rb;
 
+    bool _stopped = false;
+
     private float _lifeTime;
     private float _timer;
     private int _damage;
     private BulletPoolFinal _pool;
     //private EnemyFinal enemy;
+
+    private float playerController;
+
+    public Animator animator;
+
+    private void Start()
+    {
+
+        playerController = FindObjectOfType<PlayerControllerFinal>().bulletSpeed;
+
+    }
 
     private void Reset()
     {
@@ -53,10 +66,16 @@ public class BulletFinal : MonoBehaviour
 
         if (other.CompareTag("Enemy"))
         {
+
             enemy.TakeDamage(damage);
+
+            animator.SetTrigger("EndBala");
+
+            StopBullet();
+
         }
 
-        Desactivar();
+        //Desactivar();
     }
 
     private void Desactivar()
@@ -68,6 +87,23 @@ public class BulletFinal : MonoBehaviour
             _pool.ReturnBullet(this);
         else
             gameObject.SetActive(false);
+    }
+
+    private void StopBullet()
+    {
+        _stopped = true;
+
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;             // velocidad 0
+            rb.angularVelocity = 0f;                // por las dudas
+            rb.bodyType = RigidbodyType2D.Kinematic; // que ya no reciba fuerzas
+        }
+
+        // que no vuelva a chocar
+        Collider2D col = GetComponent<Collider2D>();
+        if (col != null)
+            col.enabled = false;
     }
 
 }

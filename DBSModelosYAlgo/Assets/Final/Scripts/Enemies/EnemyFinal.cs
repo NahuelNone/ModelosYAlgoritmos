@@ -27,6 +27,9 @@ public class EnemyFinal : MonoBehaviour
     [Header("Referencias")]
     public Transform player; // arrastrás el player acá en el inspector
 
+    [Header("Hurt")]
+    public Animator animator;
+
     private IMoveStrategy _moveStrategy;
     private IAttackStrategy _attackStrategy;
     private Rigidbody2D _rb;
@@ -78,6 +81,9 @@ public class EnemyFinal : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+
+        animator.SetTrigger("Hurt");
+
         currentHealth -= amount;
         if (currentHealth < 0) currentHealth = 0;
 
