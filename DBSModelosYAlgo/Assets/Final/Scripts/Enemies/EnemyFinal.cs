@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 public enum MoveType { Patrol, Chase }
 public enum AttackType { Melee, Ranged }
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class EnemyFinal : MonoBehaviour
+public class EnemyFinal : PrototypeFinal
 {
     [Header("Config general")]
     public MoveType moveType;
@@ -111,5 +112,40 @@ public class EnemyFinal : MonoBehaviour
     public void SetAttackStrategy(IAttackStrategy newStrategy)
     {
         _attackStrategy = newStrategy;
+    }
+
+    // ==== PROTOTYPE helpers (fluentes) ====
+
+    public EnemyFinal SetColor(Color col)
+    {
+        var sr = GetComponent<SpriteRenderer>();
+        if (sr != null)
+            sr.color = col;
+
+        return this;
+    }
+
+    public EnemyFinal SetPosition(GameObject goP)
+    {
+        transform.position = goP.transform.position;
+        return this;
+    }
+
+    public EnemyFinal SetScale(float x = 1, float y = 1, float z = 1)
+    {
+        transform.localScale = new Vector3(x, y, z);
+        return this;
+    }
+
+    // Implementación del Prototype
+    public override PrototypeFinal Clone()
+    {
+        // Esto clona TODO el prefab: Sprite, Rigidbody2D, EnemyFinal, estrategias, etc.
+        EnemyFinal clone = Instantiate(this);
+
+        // Si querés randomizar algo automáticamente en cada clon, podés hacerlo acá:
+        // clone.SetColor(Random.ColorHSV());
+
+        return clone;
     }
 }
