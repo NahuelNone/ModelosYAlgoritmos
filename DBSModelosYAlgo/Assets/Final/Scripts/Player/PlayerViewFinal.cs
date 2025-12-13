@@ -16,8 +16,11 @@ public class PlayerViewFinal : MonoBehaviour
 
     [HideInInspector] public bool isGrounded;
 
-    [Header("Vida UI (opcional)")]
+    [Header("Vida UI")]
     public Slider healthSlider;
+
+    [Header("Energia Ui")]
+    public Slider energySlider;
 
     private void Reset()
     {
@@ -119,26 +122,57 @@ public class PlayerViewFinal : MonoBehaviour
 
         Debug.Log("Vida UI!");
 
-        //if (healthSlider != null)
-        //{
-        //    healthSlider.maxValue = maxHealth;
-        //    healthSlider.value = maxHealth;
-        //}
-        //// Si usás Image:
-        //// if (healthFill != null) healthFill.fillAmount = 1f;
+        if (healthSlider != null)
+        {
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = maxHealth;
+        }
+        // Si usás Image:
+        // if (healthFill != null) healthFill.fillAmount = 1f;
     }
+
+    //public void InitEnergyUI(float maxEnergy)
+    //{
+    //
+    //    Debug.Log("Energia UI!");
+    //
+    //    if (energySlider != null)
+    //    {
+    //        energySlider.maxValue = maxEnergy;
+    //        energySlider.value = maxEnergy;
+    //    }
+    //    // Si usás Image:
+    //    // if (healthFill != null) healthFill.fillAmount = 1f;
+    //}
 
     public void UpdateHealthUI(int current, int max)
     {
 
         Debug.Log("Actualizar Vida UI!");
 
-        //if (healthSlider != null)
+        if (healthSlider != null)
+        {
+            healthSlider.maxValue = max;
+            healthSlider.value = current;
+        }
+        
+        //if (animator != null)
         //{
-        //    healthSlider.maxValue = max;
-        //    healthSlider.value = current;
+        //    animator.SetTrigger("Hit");
         //}
-        //
+    }
+
+    public void UpdateEnergyUI(float current)
+    {
+
+        Debug.Log("Actualizar Energia UI!");
+
+        if (energySlider != null)
+        {
+            
+            energySlider.value = current;
+        }
+
         //if (animator != null)
         //{
         //    animator.SetTrigger("Hit");
@@ -155,5 +189,4 @@ public class PlayerViewFinal : MonoBehaviour
         //    animator.SetTrigger("Die");
         //}
     }
-
 }

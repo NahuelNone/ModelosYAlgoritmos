@@ -7,6 +7,7 @@ public class PlayerModelFinal
 
     // EVENTOS
     public event Action<int, int> OnHealthChanged;   // current, max
+    public event Action<float, float> OnEnergyChanged;     // current, max
     public event Action OnDeath;
 
     [Header("Movimiento")]
@@ -32,12 +33,16 @@ public class PlayerModelFinal
     public int JumpsUsed => _jumpsUsed;
 
     public float CurrentHealth => _currentHealth;
+
+    public float AttackCooldownTimer => _attackCooldownTimer;
     public bool IsDead => _currentHealth <= 0;
 
     public void Init()
     {
+
         _currentHealth = maxHealth;
         OnHealthChanged?.Invoke(_currentHealth, maxHealth);
+
     }
 
     public void SetGrounded(bool grounded)
@@ -57,10 +62,13 @@ public class PlayerModelFinal
         _isGrounded = false;
     }
 
-    public void TickAttackCooldown(float deltaTime)
+    public float TickAttackCooldown(float deltaTime)
     {
         if (_attackCooldownTimer > 0)
             _attackCooldownTimer -= deltaTime;
+
+        return _attackCooldownTimer;
+
     }
 
     public bool CanAttack()
@@ -77,14 +85,6 @@ public class PlayerModelFinal
     public void TakeDamage(float amount)
     {
         _currentHealth = (int)Mathf.Clamp(_currentHealth - amount, 0f, maxHealth);
-    }
-
-    public void Heal(int amount)
-    {
-        if (IsDead) return;
-
-        _currentHealth = Mathf.Clamp(_currentHealth + amount, 0, maxHealth);
-        OnHealthChanged?.Invoke(_currentHealth, maxHealth);
     }
 
 }

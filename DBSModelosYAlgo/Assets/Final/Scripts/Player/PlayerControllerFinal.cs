@@ -26,6 +26,7 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
             view = GetComponent<PlayerViewFinal>();
 
         model.OnHealthChanged += HandleHealthChanged;
+        model.OnEnergyChanged += HandleEnergyChanged;
         model.OnDeath += HandleDeath;
 
         if (bulletPool != null)
@@ -47,13 +48,13 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
 
     private void Update()
     {
-        // Cooldown de ataque
-        model.TickAttackCooldown(Time.deltaTime);
 
         LeerInputMovimiento();
         ManejarMovimiento();
         ManejarSalto();
         ManejarAtaque();
+        ManejarAtaqueUI();
+
     }
 
     private void LeerInputMovimiento()
@@ -84,6 +85,7 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
     {
         if (Input.GetKeyDown(KeyCode.Space) && model.CanAttack())
         {
+
             model.OnAttack();
 
             if (_currentWeapon != null)
@@ -92,7 +94,7 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
             }
             else
             {
-                Debug.Log("ATAQUE (sin arma configurada todavía)");
+                Debug.Log("No hay arma disponible");
             }
         }
     }
@@ -146,13 +148,29 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
         view.UpdateHealthUI(current, max);
     }
 
+    private void HandleEnergyChanged(float current, float max)
+    {
+        view.UpdateEnergyUI(current);
+    }
+
     private void HandleDeath()
     {
         view.PlayDeath();
-        Debug.Log("El jugador murió (evento del Model)");
+        Debug.Log("El jugador murió");
 
         // Podés además desactivar input, llamar GameManager, etc.
     }
 
+    public void ManejarAtaqueUI()
+    {
+
+        // Cooldown de ataque
+        model.TickAttackCooldown(Time.deltaTime);
+
+        //Debug.Log("Tiempo restante para próximo ataque: " + model.AttackCooldownTimer);
+
+        view.UpdateEnergyUI(model.AttackCooldownTimer);
+
+    }
 
 }

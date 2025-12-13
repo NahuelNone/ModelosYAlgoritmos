@@ -8,11 +8,11 @@ public class CameraFollow2D : MonoBehaviour
     public Vector2 offset = Vector2.zero;
 
     [Header("Dead Zone (world units)")]
-    public Vector2 deadZoneSize = new Vector2(3f, 2f);
+    public Vector2 deadZoneSize = new Vector2(3f, 12.4f);
 
     [Header("Smoothing")]
     [Range(0.01f, 1f)]
-    public float smoothTime = 0.15f;
+    public float smoothTime = 0.7f;
 
     [Header("Bounds (optional)")]
     public bool useBounds = false;
