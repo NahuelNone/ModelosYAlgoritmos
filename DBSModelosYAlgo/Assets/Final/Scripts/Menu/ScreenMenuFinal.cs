@@ -17,7 +17,13 @@ public class ScreenMenuFinal : MonoBehaviour, IScreenFinal
 
         foreach (var b in _buttons)
             b.interactable = true;
+
+        // Apagar todos los niveles cuando estoy en el menú
+        var config = FindObjectOfType<ConfigSMFinal>();
+        if (config != null)
+            config.DeactivateAllLevels();
     }
+
 
     // Se llama cuando otra pantalla se apila encima (ej: el juego)
     public void Deactivate()

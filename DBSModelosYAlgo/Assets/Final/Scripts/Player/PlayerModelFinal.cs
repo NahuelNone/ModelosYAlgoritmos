@@ -21,7 +21,7 @@ public class PlayerModelFinal
     private bool _isGrounded = false;
 
     [Header("Ataque")]
-    public float attackCooldown = 0.25f;
+    public float attackCooldown = 2f;
     private float _attackCooldownTimer = 0f;
 
     // 🔹 VIDA

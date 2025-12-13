@@ -83,6 +83,10 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
     // Space para atacar
     private void ManejarAtaque()
     {
+
+        // Cooldown de ataque
+        model.TickAttackCooldown(Time.deltaTime);
+
         if (Input.GetKeyDown(KeyCode.Space) && model.CanAttack())
         {
 
@@ -155,7 +159,13 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
 
     private void HandleDeath()
     {
+
         view.PlayDeath();
+
+        var config = FindObjectOfType<ConfigSMFinal>();
+        if (config != null)
+            config.ShowGameOver();
+
         Debug.Log("El jugador murió");
 
         // Podés además desactivar input, llamar GameManager, etc.
@@ -165,7 +175,7 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
     {
 
         // Cooldown de ataque
-        model.TickAttackCooldown(Time.deltaTime);
+        //model.TickAttackCooldown(Time.deltaTime);
 
         //Debug.Log("Tiempo restante para próximo ataque: " + model.AttackCooldownTimer);
 

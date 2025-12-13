@@ -171,6 +171,7 @@ public class PlayerViewFinal : MonoBehaviour
         {
             
             energySlider.value = current;
+
         }
 
         //if (animator != null)

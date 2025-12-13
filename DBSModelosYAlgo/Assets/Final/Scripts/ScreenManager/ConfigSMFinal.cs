@@ -17,6 +17,10 @@ public class ConfigSMFinal : MonoBehaviour
     // Nivel actualmente activo
     private Transform currentLevelRoot;
 
+    private int currentLevelIndex = 0;
+
+    public static int LevelToStartOnLoad = 0;
+
     public bool pausa;
 
     private void Start()
@@ -24,28 +28,41 @@ public class ConfigSMFinal : MonoBehaviour
 
         menu.SetActive(true);
 
-        // Apagamos todos los niveles al arrancar
         if (level1Root != null) level1Root.gameObject.SetActive(false);
         if (level2Root != null) level2Root.gameObject.SetActive(false);
         if (level3Root != null) level3Root.gameObject.SetActive(false);
 
         currentLevelRoot = null;
-
-        // Arrancamos en el menú
-        ScreenManagerFinal.Instance.Push(menuScreen);
         pausa = false;
+
+        if (LevelToStartOnLoad > 0)
+        {
+            // venimos de un "Retry"
+            int lvl = LevelToStartOnLoad;
+            LevelToStartOnLoad = 0;
+            StartLevel(lvl);
+        }
+        else
+        {
+            // arranque normal → menú
+            ScreenManagerFinal.Instance.Push(menuScreen);
+        }
     }
+
+
 
     private void Update()
     {
         if (!Input.GetKeyDown(KeyCode.Escape))
             return;
 
-        // Si no hay nivel activo, estamos en menú / niveles → no hay pausa
+        // si hay una pantalla de Game Over, ESC no hace nada
+        if (FindObjectOfType<ScreenGameOverFinal>() != null)
+            return;
+
         if (currentLevelRoot == null || !currentLevelRoot.gameObject.activeInHierarchy)
             return;
 
-        // Si hay una pantalla de mensaje arriba, ESC la cierra primero
         if (FindObjectOfType<ScreenMessageFinal>() != null)
         {
             ScreenManagerFinal.Instance.Pop();
@@ -66,39 +83,38 @@ public class ConfigSMFinal : MonoBehaviour
 
     // --- Arrancar un nivel concreto desde la pantalla de niveles ---
     public void StartLevel(int levelIndex)
+{
+    // APAGAR TODO
+    DeactivateAllLevels();
+
+    Transform chosen = null;
+
+    switch (levelIndex)
     {
-        // Apagamos todos los niveles
-        if (level1Root != null) level1Root.gameObject.SetActive(false);
-        if (level2Root != null) level2Root.gameObject.SetActive(false);
-        if (level3Root != null) level3Root.gameObject.SetActive(false);
-
-        Transform chosen = null;
-
-        switch (levelIndex)
-        {
-            case 1: chosen = level1Root; break;
-            case 2: chosen = level2Root; break;
-            case 3: chosen = level3Root; break;
-            default:
-                Debug.LogError("Nivel inválido: " + levelIndex);
-                return;
-        }
-
-        if (chosen == null)
-        {
-            Debug.LogError("No se asignó el Transform del nivel " + levelIndex + " en ConfigSMFinal.");
+        case 1: chosen = level1Root; break;
+        case 2: chosen = level2Root; break;
+        case 3: chosen = level3Root; break;
+        default:
+            Debug.LogError("Nivel inválido: " + levelIndex);
             return;
-        }
-
-        // Guardamos cuál es el nivel actual
-        currentLevelRoot = chosen;
-
-        // Encendemos ese nivel
-        chosen.gameObject.SetActive(true);
-
-        // Lo apilamos como pantalla jugable
-        ScreenManagerFinal.Instance.Push(new ScreenGOFinal(chosen));
     }
+
+    if (chosen == null)
+    {
+        Debug.LogError("No se asignó el Transform del nivel " + levelIndex + " en ConfigSMFinal.");
+        return;
+    }
+
+    currentLevelIndex = levelIndex;
+    currentLevelRoot = chosen;
+
+    // Encendemos SOLO este nivel
+    chosen.gameObject.SetActive(true);
+
+    // Empuja la pantalla de juego y desactiva Menú / Niveles
+    ScreenManagerFinal.Instance.Push(new ScreenGOFinal(chosen));
+}
+
 
     public void OpenPause()
     {
@@ -138,7 +154,48 @@ public class ConfigSMFinal : MonoBehaviour
         Time.timeScale = 1f;
         pausa = false;
 
+        LevelToStartOnLoad = 0;   // para que arranque en el menú
         var scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.buildIndex);
     }
+
+    public void RestartCurrentLevel()
+    {
+        if (currentLevelIndex == 0) return;
+
+        Time.timeScale = 1f;
+        pausa = false;
+
+        LevelToStartOnLoad = currentLevelIndex;
+        var scene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(scene.buildIndex);
+    }
+
+    public void ShowGameOver()
+    {
+        // evitar duplicados
+        if (FindObjectOfType<ScreenGameOverFinal>() != null)
+            return;
+
+        Time.timeScale = 0f;
+
+        GameObject prefab = Resources.Load<GameObject>("Screen_GameOver");
+        GameObject go = Instantiate(prefab);
+        ScreenGameOverFinal screen = go.GetComponent<ScreenGameOverFinal>();
+
+        ScreenManagerFinal.Instance.Push(screen);
+    }
+
+    public void DeactivateAllLevels()
+    {
+        if (level1Root != null) level1Root.gameObject.SetActive(false);
+        if (level2Root != null) level2Root.gameObject.SetActive(false);
+        if (level3Root != null) level3Root.gameObject.SetActive(false);
+
+        // ya no hay nivel activo
+        currentLevelRoot = null;
+        currentLevelIndex = 0;
+    }
+
+
 }
