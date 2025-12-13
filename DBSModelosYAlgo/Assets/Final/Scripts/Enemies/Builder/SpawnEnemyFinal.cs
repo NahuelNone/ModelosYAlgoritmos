@@ -20,7 +20,7 @@ public class SpawnEnemyFinal : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
 
-            var enemyFinal = Instantiate(enemyPref).SetColor(Color.red).SetPosition(spawnPoint).SetScale(3, 1, 4);
+            var enemyFinal = Instantiate(enemyPref).SetPosition(spawnPoint);
 
             this.GetComponent<BoxCollider2D>().enabled = false;
 

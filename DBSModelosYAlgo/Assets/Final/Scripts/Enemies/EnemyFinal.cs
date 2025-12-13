@@ -5,7 +5,7 @@ public enum MoveType { Patrol, Chase }
 public enum AttackType { Melee, Ranged }
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class EnemyFinal : PrototypeFinal
+public class EnemyFinal : PrototypeFinal, IDamagable
 {
     [Header("Config general")]
     public MoveType moveType;
@@ -80,15 +80,15 @@ public class EnemyFinal : PrototypeFinal
 
     // ----------- VIDA ------------
 
-    public void TakeDamage(int amount)
+    public void ReceiveDamage(int damage)
     {
 
         animator.SetTrigger("Hurt");
 
-        currentHealth -= amount;
+        currentHealth -= damage;
         if (currentHealth < 0) currentHealth = 0;
 
-        Debug.Log($"[{name}] recibe {amount} de daño. Vida: {currentHealth}/{maxHealth}");
+        Debug.Log($"[{name}] recibe {damage} de daño. Vida: {currentHealth}/{maxHealth}");
 
         if (currentHealth <= 0)
         {
@@ -116,14 +116,14 @@ public class EnemyFinal : PrototypeFinal
 
     // ==== PROTOTYPE helpers (fluentes) ====
 
-    public EnemyFinal SetColor(Color col)
-    {
-        var sr = GetComponent<SpriteRenderer>();
-        if (sr != null)
-            sr.color = col;
-
-        return this;
-    }
+    //public EnemyFinal SetColor(Color col)
+    //{
+    //    var sr = GetComponent<SpriteRenderer>();
+    //    if (sr != null)
+    //        sr.color = col;
+    //
+    //    return this;
+    //}
 
     public EnemyFinal SetPosition(GameObject goP)
     {
@@ -131,11 +131,11 @@ public class EnemyFinal : PrototypeFinal
         return this;
     }
 
-    public EnemyFinal SetScale(float x = 1, float y = 1, float z = 1)
-    {
-        transform.localScale = new Vector3(x, y, z);
-        return this;
-    }
+    //public EnemyFinal SetScale(float x = 1, float y = 1, float z = 1)
+    //{
+    //    transform.localScale = new Vector3(x, y, z);
+    //    return this;
+    //}
 
     // Implementación del Prototype
     public override PrototypeFinal Clone()

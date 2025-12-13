@@ -67,7 +67,7 @@ public class BulletFinal : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
 
-            enemy.TakeDamage(damage);
+            enemy.ReceiveDamage(damage);
 
             animator.SetTrigger("EndBala");
 

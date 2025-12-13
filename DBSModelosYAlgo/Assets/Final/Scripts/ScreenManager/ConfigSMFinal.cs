@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class ConfigSMFinal : MonoBehaviour
 {
+
+    public GameObject menu;
+
     // Raíces de cada nivel (asignar en el Inspector)
     public Transform level1Root;
     public Transform level2Root;
@@ -18,6 +21,9 @@ public class ConfigSMFinal : MonoBehaviour
 
     private void Start()
     {
+
+        menu.SetActive(true);
+
         // Apagamos todos los niveles al arrancar
         if (level1Root != null) level1Root.gameObject.SetActive(false);
         if (level2Root != null) level2Root.gameObject.SetActive(false);

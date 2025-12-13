@@ -155,4 +155,5 @@ public class PlayerViewFinal : MonoBehaviour
         //    animator.SetTrigger("Die");
         //}
     }
+
 }

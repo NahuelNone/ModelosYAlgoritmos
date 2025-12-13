@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerViewFinal))]
-public class PlayerControllerFinal : MonoBehaviour
+public class PlayerControllerFinal : MonoBehaviour, IDamagable
 {
     [Header("MVC")]
     public PlayerViewFinal view;
@@ -116,7 +116,7 @@ public class PlayerControllerFinal : MonoBehaviour
         }
     }
 
-    public void ReceiveDamage(float amount)
+    public void ReceiveDamage(int amount)
     {
         // 1) Actualizar modelo
         model.TakeDamage(amount);
@@ -137,7 +137,7 @@ public class PlayerControllerFinal : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            ReceiveDamage(20f); // o el daño que quieras
+            ReceiveDamage(20); // o el daño que quieras
         }
     }
 
