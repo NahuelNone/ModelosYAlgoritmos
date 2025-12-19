@@ -23,6 +23,8 @@ public class ConfigSMFinal : MonoBehaviour
 
     public bool pausa;
 
+    [SerializeField] private int maxLevelIndex = 3;
+
     private void Start()
     {
 
@@ -48,8 +50,6 @@ public class ConfigSMFinal : MonoBehaviour
             ScreenManagerFinal.Instance.Push(menuScreen);
         }
     }
-
-
 
     private void Update()
     {
@@ -197,5 +197,35 @@ public class ConfigSMFinal : MonoBehaviour
         currentLevelIndex = 0;
     }
 
+    public void GoToNextLevel()
+    {
+        if (currentLevelIndex <= 0)
+        {
+            Debug.LogWarning("GoToNextLevel llamado sin nivel actual.");
+            return;
+        }
+
+        int next = currentLevelIndex + 1;
+
+        // Si nos pasamos del último nivel → volvemos al menú
+        if (next > maxLevelIndex)
+        {
+            Time.timeScale = 1f;
+            pausa = false;
+
+            LevelToStartOnLoad = 0;   // al recargar, arranca en menú
+            var scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.buildIndex);
+            return;
+        }
+
+        // Vamos al siguiente nivel
+        Time.timeScale = 1f;
+        pausa = false;
+
+        LevelToStartOnLoad = next;   // al recargar, Start() llamará StartLevel(next)
+        var s = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(s.buildIndex);
+    }
 
 }
