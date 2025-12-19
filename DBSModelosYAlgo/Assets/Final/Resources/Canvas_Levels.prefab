@@ -723,7 +723,7 @@ GameObject:
   - component: {fileID: 4542883160957190384}
   - component: {fileID: 5406233908641217383}
   m_Layer: 5
-  m_Name: Fondo
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -948,7 +948,7 @@ GameObject:
   - component: {fileID: 1166891396412670392}
   - component: {fileID: 1215071665724133279}
   m_Layer: 5
-  m_Name: Marco
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1140,7 +1140,7 @@ GameObject:
   - component: {fileID: 8464797336211345141}
   - component: {fileID: 8511575566055636754}
   m_Layer: 5
-  m_Name: Marco
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1215,7 +1215,7 @@ GameObject:
   - component: {fileID: 1803361489034970677}
   - component: {fileID: 8784487957112664467}
   m_Layer: 5
-  m_Name: Fondo (1)
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1739,6 +1739,7 @@ GameObject:
   - component: {fileID: 1044298936188916696}
   - component: {fileID: 6713234447578336977}
   - component: {fileID: 774911808792678940}
+  - component: {fileID: 2596825922934260229}
   m_Layer: 5
   m_Name: LevelsText
   m_TagString: Untagged
@@ -1793,7 +1794,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Levels
+  m_text: Niveles
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 40ed92bc3cc65094395bf08a8c6caa48, type: 2}
   m_sharedMaterial: {fileID: 4320968142011903833, guid: 40ed92bc3cc65094395bf08a8c6caa48, type: 2}
@@ -1862,6 +1863,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2596825922934260229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2946331548591698103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79bc00cd52c895943893a82e3c7a70bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: IDButtonLVLs
 --- !u!1 &2996225535168012810
 GameObject:
   m_ObjectHideFlags: 0
@@ -1873,6 +1887,7 @@ GameObject:
   - component: {fileID: 1029463969178063270}
   - component: {fileID: 6909126192718128069}
   - component: {fileID: 364435947607009929}
+  - component: {fileID: 7864359563926962938}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1996,6 +2011,19 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7864359563926962938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2996225535168012810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79bc00cd52c895943893a82e3c7a70bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ID: IDButtonAtras
 --- !u!1 &3172779176293418093
 GameObject:
   m_ObjectHideFlags: 0
@@ -2306,7 +2334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1233589644130238030}
   m_Layer: 5
-  m_Name: Piso
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2653,7 +2681,7 @@ GameObject:
   - component: {fileID: 110665386950172371}
   - component: {fileID: 3634123895604215385}
   m_Layer: 5
-  m_Name: Nivel3
+  m_Name: Level3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3095,7 +3123,7 @@ GameObject:
   - component: {fileID: 3057992596257738990}
   - component: {fileID: 8276116144912994830}
   m_Layer: 5
-  m_Name: Fondo
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3292,7 +3320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 0.3764706}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3983,7 +4011,7 @@ GameObject:
   - component: {fileID: 8236966109047574204}
   - component: {fileID: 1224565693215052742}
   m_Layer: 5
-  m_Name: Nivel2
+  m_Name: Level2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4342,7 +4370,7 @@ GameObject:
   - component: {fileID: 3018559764647455587}
   - component: {fileID: 2189690579348689792}
   m_Layer: 5
-  m_Name: Marco
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4493,7 +4521,7 @@ GameObject:
   - component: {fileID: 6091668712264061227}
   - component: {fileID: 5842733659265222045}
   m_Layer: 5
-  m_Name: Atras
+  m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4852,7 +4880,7 @@ GameObject:
   - component: {fileID: 2274928716176901501}
   - component: {fileID: 422307352917939707}
   m_Layer: 5
-  m_Name: Fondo
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5077,7 +5105,7 @@ GameObject:
   - component: {fileID: 2034487449442947705}
   - component: {fileID: 492209975563132495}
   m_Layer: 5
-  m_Name: Marco
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5659,7 +5687,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7705468601253372203}
   m_Layer: 5
-  m_Name: Decoracion
+  m_Name: Decoration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5716,7 +5744,7 @@ GameObject:
   - component: {fileID: 2767337708297378279}
   - component: {fileID: 5851613542961714693}
   m_Layer: 5
-  m_Name: Nivel1
+  m_Name: Level1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

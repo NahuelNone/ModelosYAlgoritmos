@@ -43,32 +43,32 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
 
     private void Start()
     {
-        model.Init();               // inicializa vida y dispara OnHealthChanged
+        model.Init(); 
     }
 
 
     private void Update()
     {
 
-        LeerInputMovimiento();
-        ManejarMovimiento();
-        ManejarSalto();
-        ManejarAtaque();
-        ManejarAtaqueUI();
+        ManageInput();
+        ManageMovement();
+        ManageJump();
+        ManageAttack();
+        ManageAttackUi();
 
     }
 
-    private void LeerInputMovimiento()
+    private void ManageInput()
     {
-        _horizontalInput = Input.GetAxisRaw("Horizontal"); // A/D o flechas
+        _horizontalInput = Input.GetAxisRaw("Horizontal");
     }
 
-    private void ManejarMovimiento()
+    private void ManageMovement()
     {
         view.Move(_horizontalInput, model.moveSpeed);
     }
 
-    private void ManejarSalto()
+    private void ManageJump()
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -80,12 +80,9 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
         }
     }
 
-
-    // Space para atacar
-    private void ManejarAtaque()
+    private void ManageAttack()
     {
 
-        // Cooldown de ataque
         model.TickAttackCooldown(Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.Space) && model.CanAttack())
@@ -103,8 +100,6 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
             }
         }
     }
-
-    // Suelo por tag
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(groundTag))
@@ -125,26 +120,25 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
 
     public void ReceiveDamage(int amount)
     {
-        // 1) Actualizar modelo
+
         model.TakeDamage(amount);
 
-        // 2) Actualizar vista/UI
         view.UpdateHealthUI((int)model.CurrentHealth, model.maxHealth);
 
         Debug.Log("Vida actual del player: " + model.CurrentHealth);
 
-        // 3) ¿murió?
         if (model.IsDead)
         {
             HandleDeath();
         }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
         {
-            ReceiveDamage(20); // o el daño que quieras
+            ReceiveDamage(20);
         }
     }
 
@@ -169,16 +163,10 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
 
         Debug.Log("El jugador murió");
 
-        // Podés además desactivar input, llamar GameManager, etc.
     }
 
-    public void ManejarAtaqueUI()
+    public void ManageAttackUi()
     {
-
-        // Cooldown de ataque
-        //model.TickAttackCooldown(Time.deltaTime);
-
-        //Debug.Log("Tiempo restante para próximo ataque: " + model.AttackCooldownTimer);
 
         view.UpdateEnergyUI(model.AttackCooldownTimer);
 
@@ -190,25 +178,23 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
 
     private IEnumerator JumpBoostRoutine(float multiplier, float duration)
     {
+
         float originalJumpForce = model.jumpForce;
         model.jumpForce *= multiplier;
 
         yield return new WaitForSeconds(duration);
 
         model.jumpForce = originalJumpForce;
-    }
-    public void ApplyShield(float duration)
-    {
-        StartCoroutine(ShieldRoutine(duration));
+
     }
 
     private IEnumerator ShieldRoutine(float duration)
     {
+
         model.hasShield = true;
-        // (opcional) podés activar un efecto visual, como un aura
+
         yield return new WaitForSeconds(duration);
         model.hasShield = false;
-        // (opcional) desactivar el efecto visual
     }
 
     public void ApplySpeedBoost(float multiplier, float duration)
@@ -218,16 +204,15 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
 
     private IEnumerator SpeedBoostRoutine(float multiplier, float duration)
     {
+
         float originalSpeed = model.moveSpeed;
 
         model.moveSpeed *= multiplier;
 
-        // (opcional) activar algún efecto visual o partícula
         yield return new WaitForSeconds(duration);
 
         model.moveSpeed = originalSpeed;
 
-        // (opcional) desactivar efecto visual
     }
 
     public void ApplyAttackCooldownBoost(float multiplier, float duration)
@@ -239,13 +224,10 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
     {
         float originalCooldown = model.attackCooldown;
 
-        // Disminuimos el cooldown dividiendo por el multiplicador (por ejemplo: x2 → la mitad del tiempo)
         model.attackCooldown /= multiplier;
 
-        // (Opcional: efecto visual o sonido)
         yield return new WaitForSeconds(duration);
 
-        // Volvemos al valor original
         model.attackCooldown = originalCooldown;
     }
 

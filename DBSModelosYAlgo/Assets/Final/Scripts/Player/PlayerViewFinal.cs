@@ -11,7 +11,7 @@ public class PlayerViewFinal : MonoBehaviour
     public Animator animator;
 
     [Header("Ataque")]
-    public Transform firePoint;   // 🔹 NUEVO: punto desde donde salen las balas
+    public Transform firePoint;   
     private float firePointOffsetX = 0.8f;
 
     [HideInInspector] public bool isGrounded;
@@ -41,19 +41,17 @@ public class PlayerViewFinal : MonoBehaviour
         vel.x = horizontalInput * moveSpeed;
         rb.velocity = vel;
 
-        // --- Manejo visual de flip ---
         if (horizontalInput > 0.01f)
         {
-            spriteRenderer.flipX = false;   // mira derecha
+            spriteRenderer.flipX = false;   
             UpdateFirePointSide();
         }
         else if (horizontalInput < -0.01f)
         {
-            spriteRenderer.flipX = true;    // mira izquierda
+            spriteRenderer.flipX = true;  
             UpdateFirePointSide();
         }
 
-        // --- Animación ---
         if (animator != null)
         {
             animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
@@ -99,7 +97,6 @@ public class PlayerViewFinal : MonoBehaviour
     {
         get
         {
-            // Si usás flipX para mirar, esto lo traduce a -1 / 1
             return spriteRenderer.flipX ? -1f : 1f;
         }
     }
@@ -110,7 +107,7 @@ public class PlayerViewFinal : MonoBehaviour
             return;
 
         Vector3 localPos = firePoint.localPosition;
-        float x = Mathf.Abs(firePointOffsetX);   // usamos el offset, no el valor actual
+        float x = Mathf.Abs(firePointOffsetX);  
 
         localPos.x = spriteRenderer.flipX ? -x : x;
 
@@ -127,23 +124,8 @@ public class PlayerViewFinal : MonoBehaviour
             healthSlider.maxValue = maxHealth;
             healthSlider.value = maxHealth;
         }
-        // Si usás Image:
-        // if (healthFill != null) healthFill.fillAmount = 1f;
     }
 
-    //public void InitEnergyUI(float maxEnergy)
-    //{
-    //
-    //    Debug.Log("Energia UI!");
-    //
-    //    if (energySlider != null)
-    //    {
-    //        energySlider.maxValue = maxEnergy;
-    //        energySlider.value = maxEnergy;
-    //    }
-    //    // Si usás Image:
-    //    // if (healthFill != null) healthFill.fillAmount = 1f;
-    //}
 
     public void UpdateHealthUI(int current, int max)
     {
@@ -156,10 +138,6 @@ public class PlayerViewFinal : MonoBehaviour
             healthSlider.value = current;
         }
         
-        //if (animator != null)
-        //{
-        //    animator.SetTrigger("Hit");
-        //}
     }
 
     public void UpdateEnergyUI(float current)
@@ -173,11 +151,6 @@ public class PlayerViewFinal : MonoBehaviour
             energySlider.value = current;
 
         }
-
-        //if (animator != null)
-        //{
-        //    animator.SetTrigger("Hit");
-        //}
     }
 
     public void PlayDeath()
@@ -185,9 +158,5 @@ public class PlayerViewFinal : MonoBehaviour
 
         Debug.Log("Reproducir animación de muerte");
 
-        //if (animator != null)
-        //{
-        //    animator.SetTrigger("Die");
-        //}
     }
 }

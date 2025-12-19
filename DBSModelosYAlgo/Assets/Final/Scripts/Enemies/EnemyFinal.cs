@@ -54,7 +54,6 @@ public class EnemyFinal : PrototypeFinal, IDamagable
 
     private void Start()
     {
-        // Fallback: si lo dejás armado a mano desde inspector
         if (!_initialized)
             BuildStrategies();
     }
@@ -104,7 +103,6 @@ public class EnemyFinal : PrototypeFinal, IDamagable
 
     private void Update()
     {
-        // fallback: si no te lo setea el spawner, lo busca cada 1s
         if (player == null && Time.time >= _nextFindPlayer)
         {
             _nextFindPlayer = Time.time + 1f;

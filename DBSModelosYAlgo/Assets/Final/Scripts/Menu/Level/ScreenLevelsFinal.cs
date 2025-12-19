@@ -17,7 +17,6 @@ public class ScreenLevelsFinal : MonoBehaviour, IScreenFinal
         foreach (var b in _buttons)
             b.interactable = true;
 
-        // Estando en la pantalla de Niveles, no quiero ningún nivel activo
         var config = FindObjectOfType<ConfigSMFinal>();
         if (config != null)
             config.DeactivateAllLevels();

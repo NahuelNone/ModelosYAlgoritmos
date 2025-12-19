@@ -53,11 +53,10 @@ public class RangedAttackStrategy : IAttackStrategy
         GameObject bullet = Object.Instantiate(_bulletPrefab, origin, Quaternion.identity);
         var eb = bullet.GetComponent<EnemyBulletFinal>();
         if (eb != null)
-            eb.Fire(dir, enemy.transform); // <-- enemy es el shooter (para ignorar colisiones)
+            eb.Fire(dir, enemy.transform); 
         Debug.Log($"[RANGED] [{enemy.name}] Instancio bala: {bullet.name} at {origin}");
 
 
-        // Evitar que la bala choque con el propio enemigo al nacer
         IgnoreShooterCollision(enemy, bullet);
 
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();

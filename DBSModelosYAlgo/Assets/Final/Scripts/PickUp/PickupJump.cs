@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickupVelocity : MonoBehaviour
+public class PickupJump : MonoBehaviour
 {
-    [Header("Configuración del Boost de Velocidad")]
-    public float speedMultiplier = 1.5f;  
+    [Header("Configuración del Boost")]
+    public float boostMultiplier = 2f;
     public float boostDuration = 4f;
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -14,10 +14,11 @@ public class PickupVelocity : MonoBehaviour
 
         if (player != null)
         {
-            player.ApplySpeedBoost(speedMultiplier, boostDuration);
 
+            player.ApplyJumpBoost(boostMultiplier, boostDuration);
 
             Destroy(gameObject);
         }
     }
 }
+

@@ -1,0 +1,12 @@
+{
+"IDButtonJugar" : "Jugar"|
+"IDButtonAtras" : "Atras"|
+"IDButtonSalir" : "Salir"|
+"IDButtonLVL" : "Niveles"|
+"IDButtonESP" : "CambiarIdioma"|
+"IDButtonENG" : "CambiarIdioma"|
+"IDButtonWarning1" : "PORTAL EN REPARACIÓN. (Esc > Niveles para ir al Lvl 2)"|
+"IDButtonWarning2" : "PORTAL EN REPARACIÓN. (Esc > Niveles para ir al Lvl 3)"|
+"IDButtonWarning3" : "PORTAL EN REPARACIÓN. (Ganaste Pa)"|
+"IDButtonLVLs" : "Niveles"
+}
