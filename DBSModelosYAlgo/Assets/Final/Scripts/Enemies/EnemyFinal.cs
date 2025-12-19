@@ -29,6 +29,17 @@ public class EnemyFinal : PrototypeFinal, IDamagable
     [Header("Hurt")]
     public Animator animator;
 
+    [Header("Ranged extra")]
+    public Transform firePoint;
+    public float bulletSpeed = 10f;
+
+    [Header("Debug")]
+    [SerializeField] private bool debugRanged = true;
+    [SerializeField] private float debugInterval = 0.5f;
+    private float _nextFindPlayer;
+
+
+
     private IMoveStrategy _moveStrategy;
     private IAttackStrategy _attackStrategy;
     private Rigidbody2D _rb;
@@ -74,8 +85,18 @@ public class EnemyFinal : PrototypeFinal, IDamagable
                 _attackStrategy = new MeleeAttackStrategy(attackRange, attackCooldown);
                 break;
             case AttackType.Ranged:
-                _attackStrategy = new RangedAttackStrategy(attackRange, attackCooldown, bulletPrefab);
+                _attackStrategy = new RangedAttackStrategy(
+                    attackRange,
+                    attackCooldown,
+                    bulletPrefab,
+                    firePoint,
+                    bulletSpeed,
+                    debugRanged,
+                    debugInterval
+                );
                 break;
+
+
         }
     }
 
@@ -83,9 +104,20 @@ public class EnemyFinal : PrototypeFinal, IDamagable
 
     private void Update()
     {
+        // fallback: si no te lo setea el spawner, lo busca cada 1s
+        if (player == null && Time.time >= _nextFindPlayer)
+        {
+            _nextFindPlayer = Time.time + 1f;
+            var go = GameObject.FindGameObjectWithTag("Player");
+            if (go != null) player = go.transform;
+            if (attackType == AttackType.Ranged && debugRanged && player == null)
+                Debug.LogWarning($"[RANGED DEBUG] [{name}] Player sigue NULL. Revisá el tag 'Player' o Init(...) del spawner.");
+        }
+
         if (player == null) return;
         _attackStrategy?.Attack(this, player);
     }
+
 
     public EnemyFinal SetPosition(Transform t)
     {
@@ -104,4 +136,29 @@ public class EnemyFinal : PrototypeFinal, IDamagable
         currentHealth -= damage;
         if (currentHealth <= 0) Destroy(gameObject);
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackType != AttackType.Ranged) return;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        if (firePoint != null)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(firePoint.position, 0.1f);
+        }
+
+        if (player != null)
+        {
+            float dist = Vector2.Distance(transform.position, player.position);
+            Gizmos.color = dist <= attackRange ? Color.green : Color.red;
+            Gizmos.DrawLine(transform.position, player.position);
+        }
+    }
+
+
+
+
 }

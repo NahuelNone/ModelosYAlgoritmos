@@ -34,29 +34,18 @@ public class SpawnEnemyFinal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (_triggered) return;
         if (!collision.CompareTag("Player")) return;
 
-        _triggered = true;
+        Transform playerTr = collision.transform; // <-- acá ya tenés el player real
 
-        for (int i = 0; i < spawnCount; i++)
-        {
-            var route = PickRoute();
-            if (route == null || route.spawnPoint == null)
-            {
-                Debug.LogWarning("[SpawnEnemyFinal] Ruta o spawnPoint nulo.");
-                continue;
-            }
+        var route = PickRoute(); // tu método (o agarrá el 0)
+        var enemy = Instantiate(enemyPref, route.spawnPoint.position, route.spawnPoint.rotation);
 
-            EnemyFinal enemy = Instantiate(enemyPref, route.spawnPoint.position, route.spawnPoint.rotation);
+        enemy.Init(playerTr, route.patrolPath != null ? route.patrolPath.Points : null);
 
-            Transform[] points = route.patrolPath != null ? route.patrolPath.Points : null;
-            enemy.Init(player, points); // <-- acá cambia el patrolPath por instancia
-        }
-
-        var col = GetComponent<Collider2D>();
-        if (col != null) col.enabled = false;
+        GetComponent<Collider2D>().enabled = false;
     }
+
 
     private SpawnRoute PickRoute()
     {
