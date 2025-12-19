@@ -25962,7 +25962,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedMultiplier: 1.5
   boostDuration: 6
-  pickupEffect: {fileID: 0}
 --- !u!58 &353815096
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -55809,7 +55808,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedMultiplier: 1.5
   boostDuration: 6
-  pickupEffect: {fileID: 0}
 --- !u!58 &783979300
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -59741,7 +59739,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldownMultiplier: 4
   boostDuration: 6
-  pickupEffect: {fileID: 0}
 --- !u!58 &835377031
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -86555,7 +86552,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldownMultiplier: 4
   boostDuration: 4
-  pickupEffect: {fileID: 0}
 --- !u!58 &1183808520
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -134419,7 +134415,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldownMultiplier: 4
   boostDuration: 4
-  pickupEffect: {fileID: 0}
 --- !u!58 &1852430703
 CircleCollider2D:
   m_ObjectHideFlags: 0

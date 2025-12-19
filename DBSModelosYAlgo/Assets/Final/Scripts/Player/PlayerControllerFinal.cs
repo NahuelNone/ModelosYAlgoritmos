@@ -50,25 +50,25 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
     private void Update()
     {
 
-        LeerInputMovimiento();
-        ManejarMovimiento();
-        ManejarSalto();
-        ManejarAtaque();
-        ManejarAtaqueUI();
+        ManageInput();
+        ManageMovement();
+        ManageJump();
+        ManageAttack();
+        ManageAttackUi();
 
     }
 
-    private void LeerInputMovimiento()
+    private void ManageInput()
     {
         _horizontalInput = Input.GetAxisRaw("Horizontal");
     }
 
-    private void ManejarMovimiento()
+    private void ManageMovement()
     {
         view.Move(_horizontalInput, model.moveSpeed);
     }
 
-    private void ManejarSalto()
+    private void ManageJump()
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -80,7 +80,7 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
         }
     }
 
-    private void ManejarAtaque()
+    private void ManageAttack()
     {
 
         model.TickAttackCooldown(Time.deltaTime);
@@ -165,7 +165,7 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
 
     }
 
-    public void ManejarAtaqueUI()
+    public void ManageAttackUi()
     {
 
         view.UpdateEnergyUI(model.AttackCooldownTimer);
@@ -185,12 +185,6 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
         yield return new WaitForSeconds(duration);
 
         model.jumpForce = originalJumpForce;
-
-    }
-    public void ApplyShield(float duration)
-    {
-
-        StartCoroutine(ShieldRoutine(duration));
 
     }
 

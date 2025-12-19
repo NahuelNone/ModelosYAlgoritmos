@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickupSalto : MonoBehaviour
+public class PickupJump : MonoBehaviour
 {
     [Header("Configuración del Boost")]
     public float boostMultiplier = 2f;

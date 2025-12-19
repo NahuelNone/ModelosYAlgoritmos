@@ -5,10 +5,8 @@ using UnityEngine;
 public class PickupBulletSpeed : MonoBehaviour
 {
     [Header("Configuración del Boost de Disparo")]
-    public float cooldownMultiplier = 2f;  
-    public float boostDuration = 4f;    
-    [Header("Efectos")]
-    public GameObject pickupEffect;   
+    public float cooldownMultiplier = 2f;
+    public float boostDuration = 4f;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -17,9 +15,6 @@ public class PickupBulletSpeed : MonoBehaviour
         if (player != null)
         {
             player.ApplyAttackCooldownBoost(cooldownMultiplier, boostDuration);
-
-            if (pickupEffect != null)
-                Instantiate(pickupEffect, transform.position, Quaternion.identity);
 
             Destroy(gameObject);
         }

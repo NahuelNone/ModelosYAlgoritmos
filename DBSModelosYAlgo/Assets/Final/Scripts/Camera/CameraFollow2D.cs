@@ -63,8 +63,6 @@ public class CameraFollow2D : MonoBehaviour
 
         transform.position = Vector3.SmoothDamp(camPos, desired3, ref _vel, smoothTime);
     }
-
-#if UNITY_EDITOR
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
@@ -72,5 +70,6 @@ public class CameraFollow2D : MonoBehaviour
         Gizmos.DrawWireCube(new Vector3(center.x, center.y, 0f),
             new Vector3(deadZoneSize.x, deadZoneSize.y, 0.1f));
     }
-#endif
+
+
 }

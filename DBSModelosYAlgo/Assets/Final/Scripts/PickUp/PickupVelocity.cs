@@ -6,10 +6,7 @@ public class PickupVelocity : MonoBehaviour
 {
     [Header("Configuración del Boost de Velocidad")]
     public float speedMultiplier = 1.5f;  
-    public float boostDuration = 4f;    
-
-    [Header("Efectos")]
-    public GameObject pickupEffect;   
+    public float boostDuration = 4f;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -19,8 +16,6 @@ public class PickupVelocity : MonoBehaviour
         {
             player.ApplySpeedBoost(speedMultiplier, boostDuration);
 
-            if (pickupEffect != null)
-                Instantiate(pickupEffect, transform.position, Quaternion.identity);
 
             Destroy(gameObject);
         }
