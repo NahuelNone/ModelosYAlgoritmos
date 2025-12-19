@@ -6,8 +6,8 @@ public class PlayerModelFinal
 {
 
     // EVENTOS
-    public event Action<int, int> OnHealthChanged;   // current, max
-    public event Action<float, float> OnEnergyChanged;     // current, max
+    public event Action<int, int> OnHealthChanged; 
+    public event Action<float, float> OnEnergyChanged;
     public event Action OnDeath;
 
     [Header("Movimiento")]
@@ -84,7 +84,6 @@ public class PlayerModelFinal
         _attackCooldownTimer = attackCooldown;
     }
 
-    // 🔹 Recibir daño / curación
     public void TakeDamage(float amount)
     {
         _currentHealth = (int)Mathf.Clamp(_currentHealth - amount, 0f, maxHealth);

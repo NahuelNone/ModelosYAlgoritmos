@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class PauseManagerFinal : MonoBehaviour
 {
-    // Podés asignar un canvas extra si querés, o dejarlo vacío
     public GameObject pauseMenuUI;
     bool isPaused = false;
 

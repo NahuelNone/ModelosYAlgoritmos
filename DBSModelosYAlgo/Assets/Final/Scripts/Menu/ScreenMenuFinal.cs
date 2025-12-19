@@ -10,7 +10,6 @@ public class ScreenMenuFinal : MonoBehaviour, IScreenFinal
         _buttons = GetComponentsInChildren<Button>(true);
     }
 
-    // Se llama cuando el menú pasa a ser la pantalla activa del stack
     public void Active()
     {
         gameObject.SetActive(true);
@@ -18,35 +17,26 @@ public class ScreenMenuFinal : MonoBehaviour, IScreenFinal
         foreach (var b in _buttons)
             b.interactable = true;
 
-        // Apagar todos los niveles cuando estoy en el menú
         var config = FindObjectOfType<ConfigSMFinal>();
         if (config != null)
             config.DeactivateAllLevels();
     }
 
 
-    // Se llama cuando otra pantalla se apila encima (ej: el juego)
     public void Deactivate()
     {
         foreach (var b in _buttons)
             b.interactable = false;
 
-        // Si no querés que desaparezca el menú cuando entras al juego,
-        // podés comentar esta línea.
         gameObject.SetActive(false);
     }
 
     public string Free()
     {
-        // Si nunca vas a volver al menú, podés destruirlo
-        // o simplemente dejarlo activo/desactivo.
         Destroy(gameObject);
         return "Menu destroyed";
     }
 
-    // -------------- BOTONES --------------
-
-    // Botón “Jugar”
     public void BTN_Play()
     {
         Debug.Log("BTN_Play ejecutado");
@@ -58,7 +48,6 @@ public class ScreenMenuFinal : MonoBehaviour, IScreenFinal
             Debug.LogWarning("ConfigSMFinal no encontrado desde ScreenMenuFinal.");
     }
 
-    // Botón “Salir”
     public void BTN_Quit()
     {
 

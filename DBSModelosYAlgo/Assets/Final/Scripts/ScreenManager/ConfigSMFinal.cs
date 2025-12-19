@@ -6,15 +6,12 @@ public class ConfigSMFinal : MonoBehaviour
 
     public GameObject menu;
 
-    // Raíces de cada nivel (asignar en el Inspector)
     public Transform level1Root;
     public Transform level2Root;
     public Transform level3Root;
 
-    // Menú principal (asignar el objeto que tiene ScreenMenuFinal)
     public ScreenMenuFinal menuScreen;
 
-    // Nivel actualmente activo
     private Transform currentLevelRoot;
 
     private int currentLevelIndex = 0;
@@ -39,14 +36,12 @@ public class ConfigSMFinal : MonoBehaviour
 
         if (LevelToStartOnLoad > 0)
         {
-            // venimos de un "Retry"
             int lvl = LevelToStartOnLoad;
             LevelToStartOnLoad = 0;
             StartLevel(lvl);
         }
         else
         {
-            // arranque normal → menú
             ScreenManagerFinal.Instance.Push(menuScreen);
         }
     }
@@ -56,7 +51,6 @@ public class ConfigSMFinal : MonoBehaviour
         if (!Input.GetKeyDown(KeyCode.Escape))
             return;
 
-        // si hay una pantalla de Game Over, ESC no hace nada
         if (FindObjectOfType<ScreenGameOverFinal>() != null)
             return;
 
@@ -75,16 +69,12 @@ public class ConfigSMFinal : MonoBehaviour
             ClosePause();
     }
 
-    // --- Arrancar juego rápido desde el botón JUGAR del menú ---
     public void StartGame()
     {
         StartLevel(1);
     }
-
-    // --- Arrancar un nivel concreto desde la pantalla de niveles ---
     public void StartLevel(int levelIndex)
 {
-    // APAGAR TODO
     DeactivateAllLevels();
 
     Transform chosen = null;
@@ -108,10 +98,8 @@ public class ConfigSMFinal : MonoBehaviour
     currentLevelIndex = levelIndex;
     currentLevelRoot = chosen;
 
-    // Encendemos SOLO este nivel
     chosen.gameObject.SetActive(true);
 
-    // Empuja la pantalla de juego y desactiva Menú / Niveles
     ScreenManagerFinal.Instance.Push(new ScreenGOFinal(chosen));
 }
 
@@ -128,7 +116,7 @@ public class ConfigSMFinal : MonoBehaviour
 
         PauseManagerFinal pm = FindObjectOfType<PauseManagerFinal>();
         if (pm != null)
-            pm.TogglePause();   // Time.timeScale = 0
+            pm.TogglePause();
 
         pausa = true;
         Debug.Log("Pausa");
@@ -138,23 +126,22 @@ public class ConfigSMFinal : MonoBehaviour
     {
         if (!pausa) return;
 
-        ScreenManagerFinal.Instance.Pop();   // saca la pantalla de pausa
+        ScreenManagerFinal.Instance.Pop();   
 
         PauseManagerFinal pm = FindObjectOfType<PauseManagerFinal>();
         if (pm != null)
-            pm.TogglePause();   // Time.timeScale = 1
+            pm.TogglePause();  
 
         pausa = false;
         Debug.Log("Cerrando pausa");
     }
 
-    // Desde el menú de pausa: volver al menú principal y reiniciar todo
     public void ReturnToMenu()
     {
         Time.timeScale = 1f;
         pausa = false;
 
-        LevelToStartOnLoad = 0;   // para que arranque en el menú
+        LevelToStartOnLoad = 0;  
         var scene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(scene.buildIndex);
     }
@@ -173,7 +160,6 @@ public class ConfigSMFinal : MonoBehaviour
 
     public void ShowGameOver()
     {
-        // evitar duplicados
         if (FindObjectOfType<ScreenGameOverFinal>() != null)
             return;
 
@@ -192,7 +178,6 @@ public class ConfigSMFinal : MonoBehaviour
         if (level2Root != null) level2Root.gameObject.SetActive(false);
         if (level3Root != null) level3Root.gameObject.SetActive(false);
 
-        // ya no hay nivel activo
         currentLevelRoot = null;
         currentLevelIndex = 0;
     }
@@ -207,23 +192,21 @@ public class ConfigSMFinal : MonoBehaviour
 
         int next = currentLevelIndex + 1;
 
-        // Si nos pasamos del último nivel → volvemos al menú
         if (next > maxLevelIndex)
         {
             Time.timeScale = 1f;
             pausa = false;
 
-            LevelToStartOnLoad = 0;   // al recargar, arranca en menú
+            LevelToStartOnLoad = 0;   
             var scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.buildIndex);
             return;
         }
 
-        // Vamos al siguiente nivel
         Time.timeScale = 1f;
         pausa = false;
 
-        LevelToStartOnLoad = next;   // al recargar, Start() llamará StartLevel(next)
+        LevelToStartOnLoad = next; 
         var s = SceneManager.GetActiveScene();
         SceneManager.LoadScene(s.buildIndex);
     }

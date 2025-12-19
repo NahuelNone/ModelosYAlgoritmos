@@ -8,12 +8,12 @@ public class EnemyBulletFinal : MonoBehaviour
     [SerializeField] private float lifeTime = 2f;
     [SerializeField] private int damage = 1;
     [SerializeField] private string targetTag = "Player";
-    [SerializeField] private LayerMask hitMask = ~0; // por defecto: todo
+    [SerializeField] private LayerMask hitMask = ~0;
 
     [Header("Impacto")]
     [SerializeField] private bool stopOnHit = true;
     [SerializeField] private bool deactivateOnHit = true;
-    [SerializeField] private float deactivateDelay = 0f; // si querés animación, poné 0.1-0.2
+    [SerializeField] private float deactivateDelay = 0f;
     [SerializeField] private Animator animator;
     [SerializeField] private string impactTrigger = "EndBala";
 
@@ -41,10 +41,6 @@ public class EnemyBulletFinal : MonoBehaviour
             _rb.angularVelocity = 0f;
         }
     }
-
-    /// <summary>
-    /// Llamalo ni bien instanciás la bala.
-    /// </summary>
     public void Fire(Vector2 direction, Transform shooterRoot = null, float? overrideSpeed = null, float? overrideLifeTime = null, int? overrideDamage = null)
     {
         _shooterRoot = shooterRoot;
@@ -70,17 +66,14 @@ public class EnemyBulletFinal : MonoBehaviour
     {
         if (other == null) return;
 
-        // filtro por capa (opcional)
         if (((1 << other.gameObject.layer) & hitMask.value) == 0) return;
 
-        // ignorar al que dispara (por si nace tocándolo)
         if (_shooterRoot != null && (other.transform == _shooterRoot || other.transform.IsChildOf(_shooterRoot)))
             return;
 
-        // Solo daña al Player
         if (other.CompareTag(targetTag))
         {
-            var dmg = other.GetComponentInParent<IDamagable>(); // ideal: tu Player implemente IDamagable
+            var dmg = other.GetComponentInParent<IDamagable>(); 
             if (dmg != null)
                 dmg.ReceiveDamage(damage);
 
@@ -88,8 +81,6 @@ public class EnemyBulletFinal : MonoBehaviour
             return;
         }
 
-        // Si querés que también choque con paredes/suelo, agregá tags o layers acá y llamá Impact().
-        // Ej: if (other.CompareTag("Ground")) Impact();
     }
 
     private void Impact()
@@ -123,7 +114,6 @@ public class EnemyBulletFinal : MonoBehaviour
     {
         if (_rb != null) _rb.velocity = Vector2.zero;
 
-        // Si NO usás pooling, podés cambiar por Destroy(gameObject);
         gameObject.SetActive(false);
     }
 

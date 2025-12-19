@@ -12,7 +12,6 @@ public class BulletFinal : MonoBehaviour
     private float _timer;
     private int _damage;
     private BulletPoolFinal _pool;
-    //private EnemyFinal enemy;
 
     private float playerController;
 
@@ -30,9 +29,6 @@ public class BulletFinal : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    /// <summary>
-    /// Inicializa la bala (la llama la BulletFactory)
-    /// </summary>
     public void Init(BulletPoolFinal pool, Vector2 direction, float speed, float lifeTime, int damage)
     {
         _pool = pool;
@@ -57,8 +53,6 @@ public class BulletFinal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // TODO: acá más adelante podés chequear si es enemigo y aplicarle daño
-        // if (other.CompareTag("Enemigo")) { ... }
 
         EnemyFinal enemy = other.GetComponent<EnemyFinal>();
 
@@ -75,7 +69,6 @@ public class BulletFinal : MonoBehaviour
 
         }
 
-        //Desactivar();
     }
 
     private void Desactivar()
@@ -95,12 +88,11 @@ public class BulletFinal : MonoBehaviour
 
         if (rb != null)
         {
-            rb.velocity = Vector2.zero;             // velocidad 0
-            rb.angularVelocity = 0f;                // por las dudas
-            rb.bodyType = RigidbodyType2D.Kinematic; // que ya no reciba fuerzas
+            rb.velocity = Vector2.zero;         
+            rb.angularVelocity = 0f;            
+            rb.bodyType = RigidbodyType2D.Kinematic; 
         }
 
-        // que no vuelva a chocar
         Collider2D col = GetComponent<Collider2D>();
         if (col != null)
             col.enabled = false;

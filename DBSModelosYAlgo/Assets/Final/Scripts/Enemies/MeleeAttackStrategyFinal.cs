@@ -21,7 +21,6 @@ public class MeleeAttackStrategy : IAttackStrategy
 
         if (dist <= _range && Time.time >= _lastAttackTime + _cooldown)
         {
-            // Acá aplicarías el daño de verdad (llamar al Player, animación, etc.)
             Debug.Log($"[{enemy.name}] pega ataque melee al jugador");
 
             _lastAttackTime = Time.time;

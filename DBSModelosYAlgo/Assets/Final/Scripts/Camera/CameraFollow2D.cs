@@ -16,8 +16,8 @@ public class CameraFollow2D : MonoBehaviour
 
     [Header("Bounds (optional)")]
     public bool useBounds = false;
-    public Vector2 boundsMin; // esquina inferior izquierda del mundo
-    public Vector2 boundsMax; // esquina superior derecha del mundo
+    public Vector2 boundsMin; 
+    public Vector2 boundsMax; 
 
     private Camera _cam;
     private Vector3 _vel;
@@ -38,7 +38,6 @@ public class CameraFollow2D : MonoBehaviour
         float halfX = deadZoneSize.x * 0.5f;
         float halfY = deadZoneSize.y * 0.5f;
 
-        // X: solo mover si sale del “rectángulo”
         if (t.x > desired.x + halfX) desired.x = t.x - halfX;
         else if (t.x < desired.x - halfX) desired.x = t.x + halfX;
 
@@ -48,7 +47,6 @@ public class CameraFollow2D : MonoBehaviour
 
         Vector3 desired3 = new Vector3(desired.x, desired.y, camPos.z);
 
-        // Clamp a límites del nivel (si querés)
         if (useBounds && _cam.orthographic)
         {
             float vert = _cam.orthographicSize;
@@ -69,7 +67,6 @@ public class CameraFollow2D : MonoBehaviour
 #if UNITY_EDITOR
     void OnDrawGizmosSelected()
     {
-        // Dibujar la dead zone aproximada en escena
         Gizmos.color = Color.yellow;
         Vector3 center = transform.position;
         Gizmos.DrawWireCube(new Vector3(center.x, center.y, 0f),

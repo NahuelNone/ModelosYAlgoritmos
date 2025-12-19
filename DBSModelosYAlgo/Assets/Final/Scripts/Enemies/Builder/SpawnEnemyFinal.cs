@@ -36,9 +36,9 @@ public class SpawnEnemyFinal : MonoBehaviour
     {
         if (!collision.CompareTag("Player")) return;
 
-        Transform playerTr = collision.transform; // <-- acá ya tenés el player real
+        Transform playerTr = collision.transform;
 
-        var route = PickRoute(); // tu método (o agarrá el 0)
+        var route = PickRoute(); 
         var enemy = Instantiate(enemyPref, route.spawnPoint.position, route.spawnPoint.rotation);
 
         enemy.Init(playerTr, route.patrolPath != null ? route.patrolPath.Points : null);
@@ -86,7 +86,6 @@ public class SpawnEnemyFinal : MonoBehaviour
         for (int i = 0; i < routes.Length; i++)
             _bag.Add(i);
 
-        // Fisher–Yates shuffle
         for (int i = 0; i < _bag.Count; i++)
         {
             int j = Random.Range(i, _bag.Count);

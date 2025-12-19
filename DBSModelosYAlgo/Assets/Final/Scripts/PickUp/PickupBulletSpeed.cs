@@ -5,11 +5,10 @@ using UnityEngine;
 public class PickupBulletSpeed : MonoBehaviour
 {
     [Header("Configuración del Boost de Disparo")]
-    public float cooldownMultiplier = 2f;   // Cuánto se reduce (x2 = la mitad del tiempo)
-    public float boostDuration = 4f;        // Cuánto dura el efecto
-
+    public float cooldownMultiplier = 2f;  
+    public float boostDuration = 4f;    
     [Header("Efectos")]
-    public GameObject pickupEffect;         // Opcional: partículas o sonido
+    public GameObject pickupEffect;   
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -17,14 +16,11 @@ public class PickupBulletSpeed : MonoBehaviour
 
         if (player != null)
         {
-            // Aplica el boost de disparo rápido
             player.ApplyAttackCooldownBoost(cooldownMultiplier, boostDuration);
 
-            // Efecto visual opcional
             if (pickupEffect != null)
                 Instantiate(pickupEffect, transform.position, Quaternion.identity);
 
-            // Destruye el pickup
             Destroy(gameObject);
         }
     }
