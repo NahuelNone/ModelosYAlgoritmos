@@ -257,12 +257,12 @@ MonoBehaviour:
   currentHealth: 0
   patrolPoints: []
   attackRange: 60
-  attackCooldown: 0.7
-  bulletPrefab: {fileID: 3753621122025738087, guid: 6c49f05a76469c94aaecbab319a20c06, type: 3}
+  attackCooldown: 1
+  bulletPrefab: {fileID: 4444010051914606484, guid: 9cad490046f139148995950b05d1afc3, type: 3}
   player: {fileID: 0}
   animator: {fileID: 715552615774628030}
   firePoint: {fileID: 7430193399964124794}
-  bulletSpeed: 6
+  bulletSpeed: 10
   debugRanged: 1
   debugInterval: 0.5
 --- !u!95 &715552615774628030
