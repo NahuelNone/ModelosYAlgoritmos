@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
-public class TXTTranslate : MonoBehaviour
+public class TXTTranslateFinal : MonoBehaviour
 {
     public string ID;
     TextMeshProUGUI _tmp;
@@ -17,10 +17,10 @@ public class TXTTranslate : MonoBehaviour
     private void OnEnable()
     {
 
-        if (LocalizationManager.instance != null)
+        if (LocalizationManagerFinal.instance != null)
         {
 
-            LocalizationManager.instance.EventChangeLang += Translate;
+            LocalizationManagerFinal.instance.EventChangeLang += Translate;
 
         }
 
@@ -31,16 +31,16 @@ public class TXTTranslate : MonoBehaviour
     private void OnDisable()
     {
         
-        if (LocalizationManager.instance != null)
+        if (LocalizationManagerFinal.instance != null)
         {
-            LocalizationManager.instance.EventChangeLang -= Translate;
+            LocalizationManagerFinal.instance.EventChangeLang -= Translate;
         }
     }
 
     void Translate()
     {
 
-        if (LocalizationManager.instance == null)
+        if (LocalizationManagerFinal.instance == null)
         {
 
             
@@ -48,7 +48,7 @@ public class TXTTranslate : MonoBehaviour
 
         }
 
-        _tmp.text = LocalizationManager.instance.Translate(ID);
+        _tmp.text = LocalizationManagerFinal.instance.Translate(ID);
 
     }
 

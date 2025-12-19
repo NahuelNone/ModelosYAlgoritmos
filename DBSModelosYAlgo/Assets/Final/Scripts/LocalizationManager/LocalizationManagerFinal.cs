@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LocalizationManager : MonoBehaviour
+public class LocalizationManagerFinal : MonoBehaviour
 {
 
-    public static LocalizationManager instance;
-    public LocalizationLang language;
+    public static LocalizationManagerFinal instance;
+    public LocalizationLangFinal language;
 
-    public LocalizationData[] data;
+    public LocalizationDataFinal[] data;
 
-    Dictionary<LocalizationLang, Dictionary<string, string>> _translate;
+    Dictionary<LocalizationLangFinal, Dictionary<string, string>> _translate;
 
     public event Action EventChangeLang;
 
@@ -21,7 +21,7 @@ public class LocalizationManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject); // opcional
-            _translate = LanguageU.GetTranslate(data);
+            _translate = LanguageUFinal.GetTranslate(data);
         }
         else if (instance != this)
         {
@@ -31,7 +31,7 @@ public class LocalizationManager : MonoBehaviour
 
 
 
-    public void ChangeLang(LocalizationLang newLang)
+    public void ChangeLang(LocalizationLangFinal newLang)
     {
 
         if(language == newLang) return;
@@ -46,14 +46,14 @@ public class LocalizationManager : MonoBehaviour
     public void SetSpanish()
     {
 
-        ChangeLang(LocalizationLang.Spanish);
+        ChangeLang(LocalizationLangFinal.Spanish);
 
     }
 
     public void SetEnglish()
     {
 
-        ChangeLang(LocalizationLang.English);
+        ChangeLang(LocalizationLangFinal.English);
 
     }
 
@@ -70,7 +70,7 @@ public class LocalizationManager : MonoBehaviour
 
 }
 
-public enum LocalizationLang
+public enum LocalizationLangFinal
 {
 
     Spanish,

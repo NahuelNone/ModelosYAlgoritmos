@@ -1,0 +1,12 @@
+{
+"IDButtonJugar" : "Play"|
+"IDButtonAtras" : "Back"|
+"IDButtonLVL" : "Levels"|
+"IDButtonSalir" : "Quit"|
+"IDButtonESP" : "ChangeLenguage"|
+"IDButtonENG" : "ChangeLenguage"|
+"IDButtonWarning1" : "PORTAL UNDER REPAIR. (Esc > 'LEVELS' to play level 2)"|
+"IDButtonWarning2" : "PORTAL UNDER REPAIR. (Esc > 'LEVELS' to play level 3)"|
+"IDButtonWarning3" : "PORTAL UNDER REPAIR. (You Won Broh)"|
+"IDButtonLVLs" : "Levels"
+}

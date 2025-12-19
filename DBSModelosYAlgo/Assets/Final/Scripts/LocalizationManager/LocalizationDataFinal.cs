@@ -4,10 +4,10 @@ using UnityEngine;
 
 [System.Serializable]
 
-public struct LocalizationData
+public struct LocalizationDataFinal
 {
     
-    public LocalizationLang language;
+    public LocalizationLangFinal language;
 
     public TextAsset[] data;
 

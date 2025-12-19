@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class LanguageU
+public static class LanguageUFinal
 {
 
-    public static Dictionary<LocalizationLang, Dictionary<string, string>> GetTranslate(LocalizationData[] data)
+    public static Dictionary<LocalizationLangFinal, Dictionary<string, string>> GetTranslate(LocalizationDataFinal[] data)
     {
 
-        var tempDic = new Dictionary<LocalizationLang, Dictionary<string, string>>();
+        var tempDic = new Dictionary<LocalizationLangFinal, Dictionary<string, string>>();
 
         for (int i = 0; i < data.Length; i++)
         {
