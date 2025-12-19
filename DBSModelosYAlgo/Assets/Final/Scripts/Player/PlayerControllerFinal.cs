@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(PlayerViewFinal))]
 public class PlayerControllerFinal : MonoBehaviour, IDamagable
@@ -181,6 +182,71 @@ public class PlayerControllerFinal : MonoBehaviour, IDamagable
 
         view.UpdateEnergyUI(model.AttackCooldownTimer);
 
+    }
+    public void ApplyJumpBoost(float multiplier, float duration)
+    {
+        StartCoroutine(JumpBoostRoutine(multiplier, duration));
+    }
+
+    private IEnumerator JumpBoostRoutine(float multiplier, float duration)
+    {
+        float originalJumpForce = model.jumpForce;
+        model.jumpForce *= multiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        model.jumpForce = originalJumpForce;
+    }
+    public void ApplyShield(float duration)
+    {
+        StartCoroutine(ShieldRoutine(duration));
+    }
+
+    private IEnumerator ShieldRoutine(float duration)
+    {
+        model.hasShield = true;
+        // (opcional) podés activar un efecto visual, como un aura
+        yield return new WaitForSeconds(duration);
+        model.hasShield = false;
+        // (opcional) desactivar el efecto visual
+    }
+
+    public void ApplySpeedBoost(float multiplier, float duration)
+    {
+        StartCoroutine(SpeedBoostRoutine(multiplier, duration));
+    }
+
+    private IEnumerator SpeedBoostRoutine(float multiplier, float duration)
+    {
+        float originalSpeed = model.moveSpeed;
+
+        model.moveSpeed *= multiplier;
+
+        // (opcional) activar algún efecto visual o partícula
+        yield return new WaitForSeconds(duration);
+
+        model.moveSpeed = originalSpeed;
+
+        // (opcional) desactivar efecto visual
+    }
+
+    public void ApplyAttackCooldownBoost(float multiplier, float duration)
+    {
+        StartCoroutine(AttackCooldownBoostRoutine(multiplier, duration));
+    }
+
+    private IEnumerator AttackCooldownBoostRoutine(float multiplier, float duration)
+    {
+        float originalCooldown = model.attackCooldown;
+
+        // Disminuimos el cooldown dividiendo por el multiplicador (por ejemplo: x2 → la mitad del tiempo)
+        model.attackCooldown /= multiplier;
+
+        // (Opcional: efecto visual o sonido)
+        yield return new WaitForSeconds(duration);
+
+        // Volvemos al valor original
+        model.attackCooldown = originalCooldown;
     }
 
 }

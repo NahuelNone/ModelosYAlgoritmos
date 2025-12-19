@@ -24,10 +24,13 @@ public class PlayerModelFinal
     public float attackCooldown = 2f;
     private float _attackCooldownTimer = 0f;
 
-    // 🔹 VIDA
+    
     [Header("Vida")]
     public int maxHealth = 100;
     private int _currentHealth;
+
+    [Header("Escudo")]
+    public bool hasShield = false;
 
     public bool IsGrounded => _isGrounded;
     public int JumpsUsed => _jumpsUsed;
